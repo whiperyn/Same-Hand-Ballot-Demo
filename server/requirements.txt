@@ -5,3 +5,5 @@ torch
 transformers==4.47.1
 Pillow
 requests
+tensorflow
+scikit-learn
