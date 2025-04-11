@@ -46,76 +46,7 @@ from PIL import Image
 
 
 
-
 # -------------------------------
-# Custom CLIP Model with DenseNet121 Encoder
-# -------------------------------
-class CLIPModel(Model):
-    def __init__(self, input_shape, embedding_dim=64, temperature=0.07, trainable_encoder=False):
-        """
-        Initialize the CLIP model.
-        
-        Parameters:
-          - input_shape: Shape of the input image (e.g., (224, 224, 3))
-          - embedding_dim: Dimension of the output embeddings.
-          - temperature: Temperature scaling factor for the logits.
-          - trainable_encoder: Whether to fine-tune the DenseNet121 weights.
-        """
-        super(CLIPModel, self).__init__()
-        self.temperature = temperature
-        self.encoder = self.create_encoder(input_shape, embedding_dim, trainable_encoder)
-        
-    def create_encoder(self, input_shape, embedding_dim, trainable):
-        """
-        Create a DenseNet121-based encoder that outputs embeddings.
-        """
-        base_model = DenseNet121(include_top=False, 
-                                 weights='imagenet', 
-                                 input_shape=input_shape, 
-                                 pooling='avg')
-        base_model.trainable = trainable  # Freeze or fine-tune as needed
-        inputs = Input(shape=input_shape)
-        x = base_model(inputs)
-        embedding = Dense(embedding_dim, activation=None)(x)
-        return Model(inputs, embedding, name="DenseNet121_encoder")
-    
-    def call(self, inputs, training=False):
-        """
-        Forward pass: compute embeddings for both branches.
-        
-        inputs: a tuple/list of two tensors (image_a, image_b)
-        """
-        image_a, image_b = inputs
-        emb_a = self.encoder(image_a)
-        emb_b = self.encoder(image_b)
-        return emb_a, emb_b
-    
-    def compute_loss(self, emb_a, emb_b):
-        """
-        Compute the CLIP loss using batch contrastive learning.
-        
-        1. Normalize the embeddings.
-        2. Compute the cosine similarity matrix (scaled by temperature).
-        3. Create labels such that the i-th image in branch A should match the i-th image in branch B.
-        4. Compute cross-entropy loss in both directions.
-        """
-        # Normalize embeddings to unit length.
-        norm_a = tf.math.l2_normalize(emb_a, axis=1)
-        norm_b = tf.math.l2_normalize(emb_b, axis=1)
-        
-        # Compute similarity logits: shape (batch_size, batch_size)
-        logits = tf.matmul(norm_a, norm_b, transpose_b=True) / self.temperature
-        
-        # Ground truth: matching pair should be at the diagonal.
-        batch_size = tf.shape(emb_a)[0]
-        labels = tf.range(batch_size)
-        
-        # Cross-entropy loss in both directions.
-        loss_a2b = tf.keras.losses.sparse_categorical_crossentropy(labels, logits, from_logits=True)
-        loss_b2a = tf.keras.losses.sparse_categorical_crossentropy(labels, tf.transpose(logits), from_logits=True)
-        loss = tf.reduce_mean(loss_a2b + loss_b2a) / 2.0
-        return loss
-
 class CLIPModel(Model):
     def __init__(self, input_shape, embedding_dim=64, temperature=0.07, trainable_encoder=False):
         super(CLIPModel, self).__init__()
