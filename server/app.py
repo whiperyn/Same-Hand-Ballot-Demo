@@ -56,6 +56,23 @@ def save_boxes():
     }
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
+    
+    # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
+
     try:
         subprocess.Popen(["python", "segment_anything_box.py"])
     except Exception as e:
@@ -76,6 +93,22 @@ def save_points():
 
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
+    
+     # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
 
     try:
         subprocess.Popen(["python", "segment_anything_dot.py"])
@@ -84,15 +117,49 @@ def save_points():
 
     return jsonify({'success': True}), 200
 
-@app.route('/api/generated-images', methods=['GET'])
-def get_generated_images():
+@app.route('/api/generated-imageA', methods=['GET'])
+def get_generated_imageA():
     folder_path = os.path.join(app.root_path, 'static', 'A', 'segmented_box')
+    json_file_path = os.path.join(app.root_path, 'segmented_A.json')
+
+    if not os.path.exists(json_file_path):
+        return jsonify({'images': []})  # JSON not yet created by segmentation
+
     try:
         files = [f for f in os.listdir(folder_path)
                  if f.startswith('segmented_') and f.endswith('.png')]
     except Exception as e:
+        print(f"Error listing segmented images: {e}")
         files = []
+
     return jsonify({'images': files})
+
+@app.route('/api/generated-imageB', methods=['GET'])
+def get_generated_imageB():
+    folder_path = os.path.join(app.root_path, 'static', 'B', 'segmented_box')
+    json_file_path = os.path.join(app.root_path, 'segmented_B.json')
+    
+    if not os.path.exists(json_file_path):
+        return jsonify({'images': []})  # JSON not yet created by segmentation
+
+    try:
+        files = [f for f in os.listdir(folder_path)
+                 if f.startswith('segmented_') and f.endswith('.png')]
+    except Exception as e:
+        print(f"Error listing segmented images: {e}")
+        files = []
+
+    return jsonify({'images': files})
+
+@app.route('/api/check-segmentation-status', methods=['GET'])
+def check_segmentation_status():
+    json_a_path = os.path.join(app.root_path, 'segmented_A.json')
+    json_b_path = os.path.join(app.root_path, 'segmented_B.json')
+    return jsonify({
+        'segmentedA': os.path.exists(json_a_path),
+        'segmentedB': os.path.exists(json_b_path)
+    }), 200
+
 
 @app.route('/api/result', methods=['GET'])
 def get_result():
@@ -133,6 +200,15 @@ def clear_cache():
                         shutil.rmtree(file_path)
                 except Exception as e:
                     print(f"Failed to delete {file_path}: {e}")
+    
+    for json_file in ['segmented_A.json', 'segmented_B.json']:
+        json_path = os.path.join(app.root_path, json_file)
+        if os.path.exists(json_path):
+            try:
+                os.remove(json_path)
+                print(f"Removed {json_file}")
+            except Exception as e:
+                print(f"Error removing {json_file}: {e}")
 
     similarity_data = {
         "similarity1": -1,

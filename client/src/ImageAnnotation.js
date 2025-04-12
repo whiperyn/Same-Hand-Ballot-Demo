@@ -13,10 +13,9 @@ function ImageAnnotation() {
   const [picName, setPicName] = useState('');
   const [processing, setProcessing] = useState(false);
   const [combinedImageName, setCombinedImageName] = useState(null);
-  const [annotationMode, setAnnotationMode] = useState('box'); 
+  const [annotationMode, setAnnotationMode] = useState('box');
 
   const MAX_WIDTH = 800;
-  const MAX_HEIGHT = 600;
 
   useEffect(() => {
     fetch('http://localhost:8000/api/get-combined-image')
@@ -56,7 +55,7 @@ function ImageAnnotation() {
         reader.onload = (event) => {
           const img = new Image();
           img.onload = () => {
-            const scale = Math.min(MAX_WIDTH / img.width, MAX_HEIGHT / img.height, 1);
+            const scale = Math.min(MAX_WIDTH / img.width, 1);
             setScaleFactor(scale);
             const canvas = canvasRef.current;
             canvas.width = img.width * scale;
@@ -79,20 +78,35 @@ function ImageAnnotation() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (img) ctx.drawImage(img, 0, 0, img.width * scale, img.height * scale);
 
-    boxesArray.forEach(([x1, y1, x2, y2]) => {
+    boxesArray.forEach(([x1, y1, x2, y2], index) => {
+      const scaledX1 = x1 * scale;
+      const scaledY1 = y1 * scale;
+      const scaledX2 = x2 * scale;
+      const scaledY2 = y2 * scale;
+
       ctx.beginPath();
-      ctx.rect(x1 * scale, y1 * scale, (x2 - x1) * scale, (y2 - y1) * scale);
+      ctx.rect(scaledX1, scaledY1, scaledX2 - scaledX1, scaledY2 - scaledY1);
       ctx.lineWidth = 2;
       ctx.strokeStyle = "red";
       ctx.stroke();
+
+      ctx.fillStyle = "red";
+      ctx.font = "16px Arial";
+      ctx.fillText(index, scaledX1 + 4, scaledY1 + 18);
     });
 
-    pointsArray.forEach((pointWrapper) => {
-      const [x, y] = pointWrapper[0]; // pointWrapper is [[x, y]]
+    pointsArray.forEach(([[x, y]], index) => {
+      const scaledX = x * scale;
+      const scaledY = y * scale;
+
       ctx.beginPath();
-      ctx.arc(x * scale, y * scale, 5, 0, 2 * Math.PI);
+      ctx.arc(scaledX, scaledY, 5, 0, 2 * Math.PI);
       ctx.fillStyle = 'blue';
       ctx.fill();
+
+      ctx.fillStyle = "blue";
+      ctx.font = "16px Arial";
+      ctx.fillText(index, scaledX + 8, scaledY - 8);
     });
   };
 
@@ -191,7 +205,7 @@ function ImageAnnotation() {
     const img = new Image();
     img.crossOrigin = "Anonymous";
     img.onload = () => {
-      const scale = Math.min(MAX_WIDTH / img.width, MAX_HEIGHT / img.height, 1);
+      const scale = Math.min(MAX_WIDTH / img.width, 1);
       setScaleFactor(scale);
       const canvas = canvasRef.current;
       canvas.width = img.width * scale;
@@ -223,17 +237,21 @@ function ImageAnnotation() {
     let intervalId;
     if (processing) {
       intervalId = setInterval(() => {
-        fetch('http://localhost:8000/api/generated-images')
+        fetch('http://localhost:8000/api/check-segmentation-status')
           .then((res) => res.json())
           .then((data) => {
-            if (data.images && data.images.length > 0) {
+            if (data.segmentedB) {
               clearInterval(intervalId);
               setProcessing(false);
-              navigate('/segmented');
+              navigate('/segmentedB');
+            } else if (data.segmentedA) {
+              clearInterval(intervalId);
+              setProcessing(false);
+              navigate('/segmentedA');
             }
           })
           .catch((error) => {
-            console.log("Segmentation not complete yet...", error);
+            console.log("Segmentation status not ready yet...", error);
           });
       }, 3000);
     }
@@ -282,7 +300,7 @@ function ImageAnnotation() {
           <div className="col-md-8">
             <canvas
               ref={canvasRef}
-              style={{ border: '1px solid #ccc', cursor: 'crosshair', width: '100%', maxHeight: '500px' }}
+              style={{ border: '1px solid #ccc', cursor: 'crosshair', width: '100%', height: 'auto' }}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}

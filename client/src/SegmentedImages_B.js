@@ -8,7 +8,7 @@ function SegmentedImages() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8000/api/generated-images')
+    fetch('http://localhost:8000/api/generated-imageB')
       .then(response => response.json())
       .then(data => {
         setImages(data.images);
@@ -58,7 +58,7 @@ function SegmentedImages() {
             <div className="col" key={index}>
               <div className="card">
                 <img
-                  src={`http://localhost:8000/static/A/segmented_box/${img}`}
+                  src={`http://localhost:8000/static/B/segmented_box/${img}`}
                   alt={`Segmented ${index}`}
                   className="card-img-top"
                   style={{ objectFit: 'contain', maxHeight: '200px' }}

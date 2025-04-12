@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ImageAnnotation from './ImageAnnotation';
-import SegmentedImages from './SegmentedImages';
+import SegmentedImages_A from './SegmentedImages_A';
+import SegmentedImages_B from './SegmentedImages_B';
 import Results from './Results';
 import CombineImages from './CombineImages';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,7 +34,10 @@ function App() {
                   <Link to="/" className="nav-link">Annotate Image</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/segmented" className="nav-link">View Segmented Images</Link>
+                  <Link to="/segmentedA" className="nav-link">View Segmented Image A</Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/segmentedB" className="nav-link">View Segmented Image B</Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/results" className="nav-link">View Results</Link>
@@ -49,7 +53,8 @@ function App() {
           <Routes>
             <Route path="/combine" element={<CombineImages />} />
             <Route path="/" element={<ImageAnnotation />} />
-            <Route path="/segmented" element={<SegmentedImages />} />
+            <Route path="/segmentedA" element={<SegmentedImages_A />} />
+            <Route path="/segmentedB" element={<SegmentedImages_B />} />
             <Route path="/results" element={<Results />} />
           </Routes>
         </div>

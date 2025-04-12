@@ -213,7 +213,7 @@ points = data.get('points')
 print("Segmenting for picture:", picName)
 
 # Load your image ("ballot.jpg") and fix orientation via EXIF if needed.
-pil_image = Image.open("uploads/ballot.jpg")
+pil_image = Image.open(f"uploads/{picName}")
 pil_image = ImageOps.exif_transpose(pil_image).convert("RGB")
 print("PIL image size (width, height):", pil_image.size)
 
@@ -266,6 +266,35 @@ for idx in range(num_candidates):
     # Version 3: segmented part with minimum bounding box
     filename3 = os.path.join(output_dir_box, f"segmented_bounding_box_{idx}.png")
     save_bounding_box_cropped_segmentation(original_image_np, candidate_mask, filename3, threshold=0.5)
+
+# Write a generated image json file
+# Determine which folder we saved to
+used_dir = "A" if "A" in output_dir_irregular else "B"
+json_output_path = f"segmented_{used_dir}.json"
+
+# Build relative file paths for JSON
+irregular_files = sorted([
+    os.path.join(output_dir_irregular, f) for f in os.listdir(output_dir_irregular)
+    if f.endswith(".png")
+])
+box_files = sorted([
+    os.path.join(output_dir_box, f) for f in os.listdir(output_dir_box)
+    if f.endswith(".png")
+])
+
+# Normalize paths to use forward slashes and strip leading ./ or absolute base path
+def clean_path(p):
+    return os.path.normpath(p).replace("\\", "/").split("static/")[-1]
+json_data = {
+    "irregular": [f"static/{clean_path(p)}" for p in irregular_files],
+    "bounding_box": [f"static/{clean_path(p)}" for p in box_files]
+}
+
+# Save JSON
+with open(json_output_path, "w") as f:
+    json.dump(json_data, f, indent=4)
+
+print(f"Saved segmentation list to {json_output_path}")
 
 
 end_time = time.time()
