@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS, cross_origin
 from datetime import datetime
 import subprocess
+import shutil
 
 app = Flask(__name__, static_url_path='/static')
 # You can keep this global CORS, but we will also add an after_request handler.
@@ -61,6 +62,28 @@ def save_boxes():
         return jsonify({'error': str(e)}), 500
     return jsonify({'success': True}), 200
 
+@app.route('/api/save-points', methods=['POST'])
+def save_points():
+    data = request.get_json()
+    points = data.get('points')
+    picName = data.get('picName')
+
+    input_data = {
+        'picName': picName,
+        'boxes': [],
+        'points': points
+    }
+
+    with open('input_data.json', 'w') as f:
+        json.dump(input_data, f)
+
+    try:
+        subprocess.Popen(["python", "segment_anything_dot.py"])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    return jsonify({'success': True}), 200
+
 @app.route('/api/generated-images', methods=['GET'])
 def get_generated_images():
     folder_path = os.path.join(app.root_path, 'static', 'A', 'segmented_box')
@@ -92,28 +115,38 @@ def calculate_similarity():
 
 @app.route('/api/clear-cache', methods=['POST'])
 def clear_cache():
-    segmented_folder = os.path.join(app.root_path, 'static', 'segmented_images')
-    if os.path.exists(segmented_folder):
-        for filename in os.listdir(segmented_folder):
-            file_path = os.path.join(segmented_folder, filename)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-    uploaded_folder = os.path.join(app.root_path, 'uploads')
-    if os.path.exists(uploaded_folder):
-        for filename in os.listdir(uploaded_folder):
-            file_path = os.path.join(uploaded_folder, filename)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
+    folders_to_clear = [
+        #os.path.join(app.root_path, 'static', 'segmented_images'),
+        os.path.join(app.root_path, 'uploads'),
+        os.path.join(app.root_path, 'static', 'A'),
+        os.path.join(app.root_path, 'static', 'B')
+    ]
+
+    for folder in folders_to_clear:
+        if os.path.exists(folder):
+            for filename in os.listdir(folder):
+                file_path = os.path.join(folder, filename)
+                try:
+                    if os.path.isfile(file_path) or os.path.islink(file_path):
+                        os.remove(file_path)
+                    elif os.path.isdir(file_path):
+                        shutil.rmtree(file_path)
+                except Exception as e:
+                    print(f"Failed to delete {file_path}: {e}")
+
     similarity_data = {
         "similarity1": -1,
         "similarity2": -1,
         "similarity3": -1,
         "overall_similarity": -1
     }
+
     with open("result.json", "w") as f:
         json.dump(similarity_data, f, indent=4)
+
     with open("input_data.json", "w") as f:
         f.write("{}")
+
     return jsonify({'success': True}), 200
 
 @app.route('/api/export-combined', methods=['POST', 'OPTIONS'])

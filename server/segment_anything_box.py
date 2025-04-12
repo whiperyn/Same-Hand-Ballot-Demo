@@ -159,7 +159,7 @@ def prepare_output_directories():
 
 
 start_time = time.time()
-
+print("Running Box Segmentation")
 # Load input parameters from JSON
 with open('input_data.json', 'r') as f:
     data = json.load(f)

@@ -200,6 +200,7 @@ def prepare_output_directories():
     return dir_irregular, dir_box
 
 start_time = time.time()
+print("Running Dots Segmentation")
 with open('input_data.json', 'r') as f:
     data = json.load(f)
 
@@ -224,7 +225,7 @@ inputs = processor(pil_image, return_tensors="pt").to(device)
 image_embeddings = model.get_image_embeddings(inputs["pixel_values"])
 
 # Define segmentation input points (SAM expects points in (x, y) order).
-input_points = [[[[1000,1450]], [[1000,1100]]]]
+input_points = [points]
 
 # Prepare inputs for SAM using the point prompts.
 inputs = processor(pil_image, input_points=input_points, return_tensors="pt").to(device)
@@ -244,11 +245,6 @@ masks = processor.image_processor.post_process_masks(
 mask_group = masks[0]
 num_candidates = mask_group.shape[0]
 print(f"Found {num_candidates} candidate mask(es) for the given input points.")
-
-# Create directories for outputs.
-os.makedirs("segmentation_full_size", exist_ok=True)
-os.makedirs("segmentation_irregular", exist_ok=True)
-os.makedirs("segmentation_bounding_box", exist_ok=True)
 
 # Loop over each candidate mask and save three versions.
 # get the correct folder to save the images
