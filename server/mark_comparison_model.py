@@ -16,8 +16,12 @@ from tensorflow.keras import Model, Input
 from tensorflow.keras.applications import DenseNet121
 from tensorflow.keras.layers import Dense
 import keras.backend as K
-
 import numpy as np
+import time
+
+start_time = time.time()
+with open('input_data.json', 'r') as f:
+    data = json.load(f)
 print("Checking GPU...")
 
 tf.test.is_gpu_available(
@@ -267,8 +271,8 @@ def preprocess_single_image(image_path):
 # -------------------------------
 
 # Your image paths
-img_path1 = "./static/segmented_images/examples/0_MER01 BATCH 1-13.jpg"  # mark 0 
-img_path2 = "./static/segmented_images/examples/2_MER02 BATCH 1-13.jpg"  # mark 1 
+img_path1 = "./static/segmented_images/examples/0_20111129114909694_0004.jpg"  # mark 0 
+img_path2 = "./static/segmented_images/examples/0_20111129114909694_0014.jpg"  # mark 1 
 
 # Preprocess each image
 image1 = preprocess_single_image(img_path1)
@@ -336,4 +340,6 @@ with open(result_file, "w") as f:
 
 print("📁 Saved updated similarity results to result.json")
 
+end_time = time.time()
+print(f"Execution time: {end_time - start_time:.2f} seconds")
 # -------------------------------

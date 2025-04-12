@@ -1,1 +1,0 @@
-just to ensure the validity of the export file path for uploaded images / combined images

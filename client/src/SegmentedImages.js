@@ -58,7 +58,7 @@ function SegmentedImages() {
             <div className="col" key={index}>
               <div className="card">
                 <img
-                  src={`http://localhost:8000/static/segmented_images/${img}`}
+                  src={`http://localhost:8000/static/A/segmented_box/${img}`}
                   alt={`Segmented ${index}`}
                   className="card-img-top"
                   style={{ objectFit: 'contain', maxHeight: '200px' }}

@@ -56,14 +56,14 @@ def save_boxes():
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
     try:
-        subprocess.Popen(["python", "segment_anything.py"])
+        subprocess.Popen(["python", "segment_anything_box.py"])
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     return jsonify({'success': True}), 200
 
 @app.route('/api/generated-images', methods=['GET'])
 def get_generated_images():
-    folder_path = os.path.join(app.root_path, 'static', 'segmented_images')
+    folder_path = os.path.join(app.root_path, 'static', 'A', 'segmented_box')
     try:
         files = [f for f in os.listdir(folder_path)
                  if f.startswith('segmented_') and f.endswith('.png')]
