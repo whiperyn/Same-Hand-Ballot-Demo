@@ -163,6 +163,8 @@ npm start
 [[Watch the demo]](https://youtu.be/mHSrs_L0WWo)
 3. Remove Cache Effets
 [[Watch the demo]](https://youtu.be/J2fIXk0XuUk)
+4. Latest UI
+[[Watch the demo]](https://youtu.be/z2lvZtixsQE)
 
 
 ## Trouboushooting
