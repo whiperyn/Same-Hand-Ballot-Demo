@@ -288,7 +288,7 @@ print(f"Found {num_candidates} candidate mask(es) for the given input points.")
 # Loop over each candidate mask and save three versions.
 # get the correct folder to save the images
 output_dir_irregular, output_dir_box = prepare_output_directories(folder_base)
-alias_file = 'static/alias.txt'
+alias_file = 'alias.txt'
 alias = get_and_increment_alias(alias_file)
 for idx in range(num_candidates):
     candidate_mask = mask_group[idx]

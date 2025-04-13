@@ -1,812 +1,407 @@
 {
-    "K_0": [
+    "alias7_0": [
         {
-            "Pool": "K_1",
-            "Score": 0.9108,
-            "Logit": 13.5651,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg"
+            "Pool": "alias7_1",
+            "Score": 0.5027,
+            "Logit": 12.7297,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png"
         },
         {
-            "Pool": "I_1",
-            "Score": 0.0484,
-            "Logit": 10.6296,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
+            "Pool": "alias7_2",
+            "Score": 0.4713,
+            "Logit": 12.6651,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png"
         },
         {
-            "Pool": "J_0",
-            "Score": 0.0124,
-            "Logit": 9.2661,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
+            "Pool": "alias5_2",
+            "Score": 0.0071,
+            "Logit": 8.4664,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_2.png"
         },
         {
-            "Pool": "G_0",
-            "Score": 0.005,
-            "Logit": 8.3679,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
+            "Pool": "alias6_0",
+            "Score": 0.0056,
+            "Logit": 8.2306,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_0.png"
         },
         {
-            "Pool": "F_1",
-            "Score": 0.0043,
-            "Logit": 8.2142,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
+            "Pool": "alias5_0",
+            "Score": 0.0029,
+            "Logit": 7.5899,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_0.png"
         },
         {
-            "Pool": "M_1",
-            "Score": 0.003,
-            "Logit": 7.8513,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png"
+            "Pool": "alias4_1",
+            "Score": 0.0027,
+            "Logit": 7.4924,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_1.png"
         },
         {
-            "Pool": "H_2",
-            "Score": 0.0026,
-            "Logit": 7.7243,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
-        },
-        {
-            "Pool": "F_0",
+            "Pool": "alias8_2",
             "Score": 0.0024,
-            "Logit": 7.6193,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
+            "Logit": 7.3964,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_2.png"
         },
         {
-            "Pool": "J_2",
-            "Score": 0.0023,
-            "Logit": 7.5866,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
+            "Pool": "alias5_1",
+            "Score": 0.0019,
+            "Logit": 7.1572,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_1.png"
         },
         {
-            "Pool": "I_2",
-            "Score": 0.0018,
-            "Logit": 7.3196,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
-        },
-        {
-            "Pool": "G_1",
-            "Score": 0.0017,
-            "Logit": 7.3031,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
-        },
-        {
-            "Pool": "M_0",
-            "Score": 0.0017,
-            "Logit": 7.2984,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png"
-        },
-        {
-            "Pool": "F_2",
-            "Score": 0.0014,
-            "Logit": 7.052,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
-        },
-        {
-            "Pool": "J_1",
-            "Score": 0.0009,
-            "Logit": 6.625,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
-        },
-        {
-            "Pool": "I_0",
-            "Score": 0.0005,
-            "Logit": 5.9942,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
-        },
-        {
-            "Pool": "H_0",
-            "Score": 0.0005,
-            "Logit": 5.972,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
-        },
-        {
-            "Pool": "H_1",
-            "Score": 0.0003,
-            "Logit": 5.3969,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
-        },
-        {
-            "Pool": "L_1",
-            "Score": 0.0,
-            "Logit": 3.341,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png"
-        },
-        {
-            "Pool": "L_0",
-            "Score": 0.0,
-            "Logit": 3.0235,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png"
-        }
-    ],
-    "K_1": [
-        {
-            "Pool": "K_0",
-            "Score": 0.97,
-            "Logit": 13.5651,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg"
-        },
-        {
-            "Pool": "I_1",
-            "Score": 0.0163,
-            "Logit": 9.4772,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
-        },
-        {
-            "Pool": "J_0",
-            "Score": 0.0024,
-            "Logit": 7.5594,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
-        },
-        {
-            "Pool": "G_0",
-            "Score": 0.002,
-            "Logit": 7.386,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
-        },
-        {
-            "Pool": "M_1",
-            "Score": 0.002,
-            "Logit": 7.3635,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png"
-        },
-        {
-            "Pool": "M_0",
-            "Score": 0.0015,
-            "Logit": 7.0805,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png"
-        },
-        {
-            "Pool": "F_1",
-            "Score": 0.0014,
-            "Logit": 6.9908,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
-        },
-        {
-            "Pool": "F_0",
+            "Pool": "alias6_1",
             "Score": 0.0011,
-            "Logit": 6.7911,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
+            "Logit": 6.5789,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_1.png"
         },
         {
-            "Pool": "H_2",
+            "Pool": "alias6_2",
+            "Score": 0.001,
+            "Logit": 6.507,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_2.png"
+        },
+        {
+            "Pool": "alias4_0",
             "Score": 0.0009,
-            "Logit": 6.615,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
+            "Logit": 6.3665,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_0.png"
         },
         {
-            "Pool": "J_2",
-            "Score": 0.0006,
-            "Logit": 6.2339,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
-        },
-        {
-            "Pool": "F_2",
-            "Score": 0.0006,
-            "Logit": 6.1106,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
-        },
-        {
-            "Pool": "G_1",
-            "Score": 0.0004,
-            "Logit": 5.8529,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
-        },
-        {
-            "Pool": "I_2",
+            "Pool": "alias4_2",
             "Score": 0.0003,
-            "Logit": 5.6182,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
+            "Logit": 5.3899,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_2.png"
         },
         {
-            "Pool": "J_1",
+            "Pool": "alias8_0",
             "Score": 0.0001,
-            "Logit": 4.7431,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
+            "Logit": 4.2645,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_0.png"
         },
         {
-            "Pool": "H_0",
+            "Pool": "alias8_1",
             "Score": 0.0001,
-            "Logit": 4.5783,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
+            "Logit": 3.6793,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_1.png"
         },
         {
-            "Pool": "I_0",
-            "Score": 0.0001,
-            "Logit": 4.2504,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
-        },
-        {
-            "Pool": "H_1",
-            "Score": 0.0001,
-            "Logit": 4.0842,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
-        },
-        {
-            "Pool": "L_1",
+            "Pool": "alias3_3",
             "Score": 0.0,
-            "Logit": 3.6373,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png"
+            "Logit": 0.8333,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_3.png"
         },
         {
-            "Pool": "L_0",
+            "Pool": "alias3_4",
             "Score": 0.0,
-            "Logit": 3.1742,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png"
+            "Logit": 0.6832,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_4.png"
+        },
+        {
+            "Pool": "alias3_2",
+            "Score": 0.0,
+            "Logit": -0.2024,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_2.png"
+        },
+        {
+            "Pool": "alias3_1",
+            "Score": 0.0,
+            "Logit": -1.3534,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_1.png"
+        },
+        {
+            "Pool": "alias3_0",
+            "Score": 0.0,
+            "Logit": -1.9437,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_0.png"
         }
     ],
-    "L_0": [
+    "alias7_1": [
         {
-            "Pool": "L_1",
-            "Score": 0.9479,
-            "Logit": 10.8303,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png"
+            "Pool": "alias7_0",
+            "Score": 0.5735,
+            "Logit": 12.7297,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png"
         },
         {
-            "Pool": "M_1",
-            "Score": 0.0392,
-            "Logit": 7.6444,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png"
+            "Pool": "alias7_2",
+            "Score": 0.3931,
+            "Logit": 12.352,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png"
         },
         {
-            "Pool": "M_0",
-            "Score": 0.0117,
-            "Logit": 6.4356,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png"
+            "Pool": "alias6_0",
+            "Score": 0.0078,
+            "Logit": 8.4347,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_0.png"
         },
         {
-            "Pool": "K_1",
-            "Score": 0.0004,
-            "Logit": 3.1742,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg"
+            "Pool": "alias5_2",
+            "Score": 0.0051,
+            "Logit": 8.0038,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_2.png"
         },
         {
-            "Pool": "K_0",
-            "Score": 0.0004,
-            "Logit": 3.0235,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg"
+            "Pool": "alias5_0",
+            "Score": 0.0044,
+            "Logit": 7.8588,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_0.png"
         },
         {
-            "Pool": "I_1",
-            "Score": 0.0001,
-            "Logit": 1.7211,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
+            "Pool": "alias6_1",
+            "Score": 0.003,
+            "Logit": 7.4767,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_1.png"
         },
         {
-            "Pool": "F_1",
-            "Score": 0.0001,
-            "Logit": 1.4538,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
+            "Pool": "alias8_2",
+            "Score": 0.0029,
+            "Logit": 7.4366,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_2.png"
         },
         {
-            "Pool": "J_0",
-            "Score": 0.0001,
-            "Logit": 1.3982,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
+            "Pool": "alias5_1",
+            "Score": 0.0025,
+            "Logit": 7.2873,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_1.png"
         },
         {
-            "Pool": "F_2",
-            "Score": 0.0001,
-            "Logit": 1.0844,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
+            "Pool": "alias6_2",
+            "Score": 0.0023,
+            "Logit": 7.2292,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_2.png"
         },
         {
-            "Pool": "F_0",
-            "Score": 0.0,
-            "Logit": 0.7239,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
+            "Pool": "alias4_1",
+            "Score": 0.0017,
+            "Logit": 6.8944,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_1.png"
         },
         {
-            "Pool": "J_2",
-            "Score": 0.0,
-            "Logit": 0.5391,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
+            "Pool": "alias8_0",
+            "Score": 0.0013,
+            "Logit": 6.6763,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_0.png"
         },
         {
-            "Pool": "J_1",
-            "Score": 0.0,
-            "Logit": -0.8337,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
+            "Pool": "alias4_0",
+            "Score": 0.0013,
+            "Logit": 6.6432,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_0.png"
         },
         {
-            "Pool": "H_0",
-            "Score": 0.0,
-            "Logit": -2.0702,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
-        },
-        {
-            "Pool": "G_1",
-            "Score": 0.0,
-            "Logit": -2.4131,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
-        },
-        {
-            "Pool": "I_2",
-            "Score": 0.0,
-            "Logit": -2.8323,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
-        },
-        {
-            "Pool": "H_1",
-            "Score": 0.0,
-            "Logit": -2.8476,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
-        },
-        {
-            "Pool": "G_0",
-            "Score": 0.0,
-            "Logit": -2.8663,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
-        },
-        {
-            "Pool": "H_2",
-            "Score": 0.0,
-            "Logit": -3.1025,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
-        },
-        {
-            "Pool": "I_0",
-            "Score": 0.0,
-            "Logit": -3.4131,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
-        }
-    ],
-    "L_1": [
-        {
-            "Pool": "L_0",
-            "Score": 0.7576,
-            "Logit": 10.8303,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png"
-        },
-        {
-            "Pool": "M_1",
-            "Score": 0.2138,
-            "Logit": 9.5653,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png"
-        },
-        {
-            "Pool": "M_0",
-            "Score": 0.0269,
-            "Logit": 7.4931,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png"
-        },
-        {
-            "Pool": "K_1",
+            "Pool": "alias4_2",
             "Score": 0.0006,
-            "Logit": 3.6373,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg"
+            "Logit": 5.8994,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_2.png"
         },
         {
-            "Pool": "K_0",
+            "Pool": "alias8_1",
             "Score": 0.0004,
-            "Logit": 3.341,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg"
+            "Logit": 5.4419,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_1.png"
         },
         {
-            "Pool": "F_2",
-            "Score": 0.0002,
-            "Logit": 2.4253,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
-        },
-        {
-            "Pool": "F_1",
-            "Score": 0.0002,
-            "Logit": 2.3646,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
-        },
-        {
-            "Pool": "F_0",
-            "Score": 0.0001,
-            "Logit": 1.7243,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
-        },
-        {
-            "Pool": "J_0",
-            "Score": 0.0001,
-            "Logit": 1.6292,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
-        },
-        {
-            "Pool": "I_1",
+            "Pool": "alias3_4",
             "Score": 0.0,
-            "Logit": 0.9411,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
+            "Logit": 0.8074,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_4.png"
         },
         {
-            "Pool": "J_2",
+            "Pool": "alias3_3",
             "Score": 0.0,
-            "Logit": 0.4304,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
+            "Logit": 0.5812,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_3.png"
         },
         {
-            "Pool": "J_1",
+            "Pool": "alias3_2",
             "Score": 0.0,
-            "Logit": 0.4196,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
+            "Logit": -0.3286,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_2.png"
         },
         {
-            "Pool": "H_0",
+            "Pool": "alias3_1",
             "Score": 0.0,
-            "Logit": 0.3322,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
+            "Logit": -1.8858,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_1.png"
         },
         {
-            "Pool": "H_2",
+            "Pool": "alias3_0",
             "Score": 0.0,
-            "Logit": -1.1372,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
-        },
-        {
-            "Pool": "G_0",
-            "Score": 0.0,
-            "Logit": -1.253,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
-        },
-        {
-            "Pool": "H_1",
-            "Score": 0.0,
-            "Logit": -1.6341,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
-        },
-        {
-            "Pool": "G_1",
-            "Score": 0.0,
-            "Logit": -1.9842,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
-        },
-        {
-            "Pool": "I_0",
-            "Score": 0.0,
-            "Logit": -2.228,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
-        },
-        {
-            "Pool": "I_2",
-            "Score": 0.0,
-            "Logit": -2.2307,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
+            "Logit": -2.3267,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_0.png"
         }
     ],
-    "M_0": [
+    "alias7_2": [
         {
-            "Pool": "M_1",
-            "Score": 0.9837,
-            "Logit": 12.8326,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png"
+            "Pool": "alias7_0",
+            "Score": 0.5557,
+            "Logit": 12.6651,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_0.png"
         },
         {
-            "Pool": "L_1",
-            "Score": 0.0047,
-            "Logit": 7.4931,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png"
+            "Pool": "alias7_1",
+            "Score": 0.4063,
+            "Logit": 12.352,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_1.png"
         },
         {
-            "Pool": "K_0",
-            "Score": 0.0039,
-            "Logit": 7.2984,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg"
+            "Pool": "alias6_0",
+            "Score": 0.0102,
+            "Logit": 8.6718,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_0.png"
         },
         {
-            "Pool": "K_1",
+            "Pool": "alias5_0",
+            "Score": 0.0089,
+            "Logit": 8.526,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_0.png"
+        },
+        {
+            "Pool": "alias5_2",
+            "Score": 0.0084,
+            "Logit": 8.476,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_2.png"
+        },
+        {
+            "Pool": "alias5_1",
             "Score": 0.0031,
-            "Logit": 7.0804,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg"
+            "Logit": 7.473,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_1.png"
         },
         {
-            "Pool": "L_0",
-            "Score": 0.0016,
-            "Logit": 6.4356,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png"
+            "Pool": "alias8_2",
+            "Score": 0.0028,
+            "Logit": 7.387,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_2.png"
         },
         {
-            "Pool": "F_2",
-            "Score": 0.0006,
-            "Logit": 5.5023,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
+            "Pool": "alias6_1",
+            "Score": 0.0026,
+            "Logit": 7.3136,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_1.png"
         },
         {
-            "Pool": "F_0",
-            "Score": 0.0005,
-            "Logit": 5.2699,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
+            "Pool": "alias6_2",
+            "Score": 0.0008,
+            "Logit": 6.088,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias6_2.png"
         },
         {
-            "Pool": "F_1",
-            "Score": 0.0005,
-            "Logit": 5.1779,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
-        },
-        {
-            "Pool": "J_2",
+            "Pool": "alias4_1",
             "Score": 0.0004,
-            "Logit": 5.0194,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
+            "Logit": 5.5177,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_1.png"
         },
         {
-            "Pool": "I_1",
-            "Score": 0.0004,
-            "Logit": 4.9872,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
-        },
-        {
-            "Pool": "J_0",
+            "Pool": "alias4_0",
             "Score": 0.0003,
+            "Logit": 5.131,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_0.png"
+        },
+        {
+            "Pool": "alias8_1",
+            "Score": 0.0002,
             "Logit": 4.7091,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_1.png"
         },
         {
-            "Pool": "J_1",
+            "Pool": "alias4_2",
             "Score": 0.0001,
-            "Logit": 3.1505,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
+            "Logit": 3.8098,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias4_2.png"
         },
         {
-            "Pool": "G_1",
+            "Pool": "alias8_0",
+            "Score": 0.0001,
+            "Logit": 3.5814,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/new_segmented_irregular/segmented_irregular_alias8_0.png"
+        },
+        {
+            "Pool": "alias3_3",
             "Score": 0.0,
-            "Logit": 2.9444,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
+            "Logit": 2.272,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_3.png"
         },
         {
-            "Pool": "H_0",
+            "Pool": "alias3_4",
             "Score": 0.0,
-            "Logit": 2.7628,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
+            "Logit": 2.2161,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_4.png"
         },
         {
-            "Pool": "G_0",
+            "Pool": "alias3_2",
             "Score": 0.0,
-            "Logit": 2.7287,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
+            "Logit": 1.2676,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_2.png"
         },
         {
-            "Pool": "H_1",
+            "Pool": "alias3_1",
             "Score": 0.0,
-            "Logit": 2.1663,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
+            "Logit": 0.0559,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_1.png"
         },
         {
-            "Pool": "H_2",
+            "Pool": "alias3_0",
             "Score": 0.0,
-            "Logit": 2.0329,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
-        },
-        {
-            "Pool": "I_2",
-            "Score": 0.0,
-            "Logit": 2.0323,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
-        },
-        {
-            "Pool": "I_0",
-            "Score": 0.0,
-            "Logit": 1.8009,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
-        }
-    ],
-    "M_1": [
-        {
-            "Pool": "M_0",
-            "Score": 0.9443,
-            "Logit": 12.8326,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_M_0.png"
-        },
-        {
-            "Pool": "L_1",
-            "Score": 0.036,
-            "Logit": 9.5653,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_1.png"
-        },
-        {
-            "Pool": "K_0",
-            "Score": 0.0065,
-            "Logit": 7.8512,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_0.jpg"
-        },
-        {
-            "Pool": "L_0",
-            "Score": 0.0053,
-            "Logit": 7.6444,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_L_0.png"
-        },
-        {
-            "Pool": "K_1",
-            "Score": 0.004,
-            "Logit": 7.3635,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Query/segmented_irregular/segmented_irregular_K_1.jpg"
-        },
-        {
-            "Pool": "F_1",
-            "Score": 0.0012,
-            "Logit": 6.1469,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_1.jpg"
-        },
-        {
-            "Pool": "F_2",
-            "Score": 0.0012,
-            "Logit": 6.139,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_2.jpg"
-        },
-        {
-            "Pool": "F_0",
-            "Score": 0.0007,
-            "Logit": 5.5851,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_F_0.jpg"
-        },
-        {
-            "Pool": "J_2",
-            "Score": 0.0003,
-            "Logit": 4.9245,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_2.jpg"
-        },
-        {
-            "Pool": "I_1",
-            "Score": 0.0002,
-            "Logit": 4.4934,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_1.jpg"
-        },
-        {
-            "Pool": "J_0",
-            "Score": 0.0002,
-            "Logit": 4.3851,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_0.jpg"
-        },
-        {
-            "Pool": "J_1",
-            "Score": 0.0,
-            "Logit": 2.8219,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_J_1.jpg"
-        },
-        {
-            "Pool": "H_0",
-            "Score": 0.0,
-            "Logit": 2.588,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_0.jpg"
-        },
-        {
-            "Pool": "G_1",
-            "Score": 0.0,
-            "Logit": 2.2777,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_1.jpg"
-        },
-        {
-            "Pool": "H_1",
-            "Score": 0.0,
-            "Logit": 2.1398,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_1.jpg"
-        },
-        {
-            "Pool": "G_0",
-            "Score": 0.0,
-            "Logit": 1.7753,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_G_0.jpg"
-        },
-        {
-            "Pool": "H_2",
-            "Score": 0.0,
-            "Logit": 1.4353,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_H_2.jpg"
-        },
-        {
-            "Pool": "I_2",
-            "Score": 0.0,
-            "Logit": 1.3638,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_2.jpg"
-        },
-        {
-            "Pool": "I_0",
-            "Score": 0.0,
-            "Logit": 1.2801,
-            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_M_1.png",
-            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_I_0.jpg"
+            "Logit": -0.0371,
+            "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias7_2.png",
+            "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias3_0.png"
         }
     ]
 }
