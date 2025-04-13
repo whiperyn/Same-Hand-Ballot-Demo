@@ -138,12 +138,29 @@ def save_irregular_segmentation(original_image_np, mask, filename, threshold=0.5
     # Crop original image and mask.
     cropped_image = original_image_np[y_min:y_max, x_min:x_max]
     cropped_mask = mask_bin[y_min:y_max, x_min:x_max]
-    # Create alpha channel for the cropped mask.
-    alpha_channel = (cropped_mask > 0).astype(np.uint8) * 255
-    rgba_cropped = np.dstack([cropped_image, alpha_channel])
-    rgba_bgra = cv2.cvtColor(rgba_cropped, cv2.COLOR_RGBA2BGRA)
-    cv2.imwrite(filename, rgba_bgra)
-    print(f"Irregular Cropped segmentation saved to {filename}")
+  
+    # Apply mask to the cropped image
+    # Ensure cropped_image is RGB
+    if cropped_image.ndim == 2:
+        cropped_image = cv2.cvtColor(cropped_image, cv2.COLOR_GRAY2RGB)
+
+    if cropped_image.shape[-1] == 3:
+        # Create a binary mask with 0/1
+        binary_mask = (cropped_mask > 0).astype(np.uint8)
+        # Invert to get background mask
+        background_mask = 1 - binary_mask
+
+        # Set background to white (255)
+        for i in range(3):
+            cropped_image[:, :, i] = (
+                cropped_image[:, :, i] * binary_mask + 255 * background_mask
+            )
+
+    # Convert to BGR for OpenCV
+    bgr_image = cv2.cvtColor(cropped_image, cv2.COLOR_RGB2BGR)
+    # filename = filename.replace(".png", ".jpg")  # Save as JPG
+    cv2.imwrite(filename, bgr_image)
+    print(f"Irregular cropped segmentation saved to {filename}")
 
 def save_bounding_box_cropped_segmentation(original_image_np, mask, filename, threshold=0.5):
     if mask.ndim > 2:
@@ -160,6 +177,7 @@ def save_bounding_box_cropped_segmentation(original_image_np, mask, filename, th
     cropped_image = original_image_np[y_min:y_max, x_min:x_max]
     # Convert cropped image from RGB to BGR for saving with OpenCV.
     cropped_bgr = cv2.cvtColor(cropped_image, cv2.COLOR_RGB2BGR)
+    # filename = filename.replace(".png", ".jpg")  # Save as JPG
     cv2.imwrite(filename, cropped_bgr)
     print(f"Bounding box cropped segmentation saved to {filename}")
 
@@ -260,12 +278,14 @@ for idx in range(num_candidates):
     #save_segmented_in_original(original_image_np, candidate_mask, filename1, threshold=0.5)
     
     # Version 2: segmented part only, irregular shape
+    original_image_np_origin = original_image_np.copy()  # Ensure we don't modify the original image
+
     filename2 = os.path.join(output_dir_irregular, f"segmented_irregular_{idx}.png")
     save_irregular_segmentation(original_image_np, candidate_mask, filename2, threshold=0.5)
     
     # Version 3: segmented part with minimum bounding box
     filename3 = os.path.join(output_dir_box, f"segmented_bounding_box_{idx}.png")
-    save_bounding_box_cropped_segmentation(original_image_np, candidate_mask, filename3, threshold=0.5)
+    save_bounding_box_cropped_segmentation(original_image_np_origin, candidate_mask, filename3, threshold=0.5)
 
 # Write a generated image json file
 # Determine which folder we saved to
