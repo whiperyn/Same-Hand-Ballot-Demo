@@ -529,11 +529,12 @@ def copy_irregular_files():
 
     # Copy all files
     for source_dir in source_dirs:
-        for filename in os.listdir(source_dir):
-            src_path = os.path.join(source_dir, filename)
-            dst_path = os.path.join(dest_dir, filename)
-            if os.path.isfile(src_path):
-                shutil.copy2(src_path, dst_path)
+        if os.path.exists(source_dir):
+            for filename in os.listdir(source_dir):
+                src_path = os.path.join(source_dir, filename)
+                dst_path = os.path.join(dest_dir, filename)
+                if os.path.isfile(src_path):
+                    shutil.copy2(src_path, dst_path)
 
     return jsonify({"status": "success", "message": "Files copied."})
 

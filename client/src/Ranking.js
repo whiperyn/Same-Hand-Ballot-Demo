@@ -66,7 +66,7 @@ const Ranking = () => {
 
   return (
     <div className="container my-4">
-      <h2 className="mb-4">Ranking Visualization</h2>
+      <h2 className="mb-4">Rankings</h2>
       {queryKeys.map((queryKey) => {
         const poolList = rankingData[queryKey];
 
