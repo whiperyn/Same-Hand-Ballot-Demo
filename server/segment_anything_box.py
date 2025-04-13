@@ -166,7 +166,7 @@ def save_bounding_box_cropped_segmentation(original_image_np, mask, filename, th
     cv2.imwrite(filename, cropped_bgr)
     print(f"Bounding box cropped segmentation saved to {filename}")
 
-def prepare_output_directories():
+def prepare_output_directories(folder):
     '''
     If static/A/ is empty → saves both versions under A/segmented_*.
     If static/A/ is not empty but B/ is → uses B/segmented_*.
@@ -183,20 +183,16 @@ def prepare_output_directories():
                 for dir in dirs:
                     os.rmdir(os.path.join(root, dir))
 
-    base_a = "static/Query"
-    base_b = "static/Pool"
-
-    if is_dir_empty(base_a):
-        dir_irregular = os.path.join(base_a, "segmented_irregular")
-        dir_box = os.path.join(base_a, "segmented_box")
-    elif is_dir_empty(base_b):
-        dir_irregular = os.path.join(base_b, "segmented_irregular")
-        dir_box = os.path.join(base_b, "segmented_box")
+    base = f"static/{folder}"
+    if base == "static/Query":
+        dir_irregular = os.path.join(base, "segmented_irregular")
+        dir_box = os.path.join(base, "segmented_box")
+    elif base == "static/Pool":
+        dir_irregular = os.path.join(base, "new_segmented_irregular")
+        dir_box = os.path.join(base, "new_segmented_box")
     else:
-        clear_directory(base_a)
-        clear_directory(base_b)
-        dir_irregular = os.path.join(base_a, "segmented_irregular")
-        dir_box = os.path.join(base_a, "segmented_box")
+        raise ValueError(f"Unrecognized base path: {base}")
+
 
     os.makedirs(dir_irregular, exist_ok=True)
     os.makedirs(dir_box, exist_ok=True)
@@ -211,6 +207,7 @@ with open('input_data.json', 'r') as f:
 
 picName = data.get('picName')
 boxes = data.get('boxes')
+folder_base = data.get('input')
 print("Segmenting for picture:", picName)
 print("Boxes:", boxes)
 
@@ -267,7 +264,7 @@ print(f"Found {num_candidates} candidate mask(es) for the given boxes.")
 
 # For each candidate mask, save Version 2 (irregular) and Version 3 (bounding box cropped).
 # get the correct folder to save the images
-output_dir_irregular, output_dir_box = prepare_output_directories()
+output_dir_irregular, output_dir_box = prepare_output_directories(folder_base)
 alias_file = 'static/alias.txt'
 alias = get_and_increment_alias(alias_file)
 for idx in range(num_candidates):
