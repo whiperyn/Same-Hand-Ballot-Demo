@@ -303,7 +303,7 @@ for idx in range(num_candidates):
     # Version 2: segmented part only, irregular shape
     original_image_np_origin = original_image_np.copy()  # Ensure we don't modify the original image
 
-    filename2 = os.path.join(output_dir_irregular, f"segmented_irregula_{alias}_{idx}.png")
+    filename2 = os.path.join(output_dir_irregular, f"segmented_irregular_{alias}_{idx}.png")
     save_irregular_segmentation(original_image_np, candidate_mask, filename2, threshold=0.5)
     
     # Version 3: segmented part with minimum bounding box

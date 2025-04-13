@@ -266,9 +266,10 @@ def collect_image_paths(folder):
 # Paths
 query_folder = "./static/Query/segmented_irregular/"
 pool_folder = "./static/Pool/segmented_irregular/"
+pool2_folder = "./static/Pool/new_segmented_irregular/"
 
 query_paths = collect_image_paths(query_folder)
-pool_paths = collect_image_paths(pool_folder)
+pool_paths = collect_image_paths(pool_folder) + collect_image_paths(pool2_folder)
 
 
 def preprocess_single_image(image_path):

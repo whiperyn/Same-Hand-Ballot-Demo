@@ -305,10 +305,10 @@ def get_result():
 @app.route('/api/calculate-similarity', methods=['POST'])
 def calculate_similarity():
     try:
-        #process = subprocess.run(["python", "model.py"], capture_output=True, text=True, check=True)
-        #print("Model stdout:", process.stdout)
-        #print("Model stderr:", process.stderr)
-        print("hello world")
+        '''process = subprocess.run(["python", "model.py"], capture_output=True, text=True, check=True)
+        print("Model stdout:", process.stdout)
+        print("Model stderr:", process.stderr)'''
+        #print("hello world")
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     return jsonify({'success': True}), 200
