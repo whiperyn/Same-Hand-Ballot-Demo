@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import AnnotationPanel from './AnnotationPanel';
-import Results from './ResultsPanel';
-import 'bootstrap/dist/css/bootstrap.min.css';
+/*import Results from './Heatmap';*/
+import HeatMapChart from './Heatmap';
+import Ranking from './Ranking';
 
 function Home() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Home() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
-      navigate('/results');
+      navigate('/HeatmapChart');
     } catch (err) {
       console.error('Error calculating similarity:', err);
     }
@@ -43,7 +44,8 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/results" element={<Results />} />
+        <Route path="/HeatmapChart" element={<HeatMapChart />} />
+        <Route path="/Ranking" element={<Ranking />} />
       </Routes>
     </Router>
   );

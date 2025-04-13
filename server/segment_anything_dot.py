@@ -198,8 +198,8 @@ def prepare_output_directories():
                 for dir in dirs:
                     os.rmdir(os.path.join(root, dir))
 
-    base_a = "static/A"
-    base_b = "static/B"
+    base_a = "static/Query"
+    base_b = "static/Pool"
 
     if is_dir_empty(base_a):
         dir_irregular = os.path.join(base_a, "segmented_irregular")

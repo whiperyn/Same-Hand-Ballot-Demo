@@ -45,14 +45,15 @@ def upload_image():
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-@app.route('/api/save-boxes', methods=['POST'])
-def save_boxes():
+@app.route('/api/save-boxesA', methods=['POST'])
+def save_boxesA():
     data = request.get_json()
     boxes = data.get('boxes')
     picName = data.get('picName')
     input_data = {
         'picName': picName,
-        'boxes': boxes
+        'boxes': boxes,
+        'input': 'A'
     }
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
@@ -79,6 +80,116 @@ def save_boxes():
         return jsonify({'error': str(e)}), 500
     return jsonify({'success': True}), 200
 
+@app.route('/api/save-boxes', methods=['POST'])
+def save_boxes():
+    data = request.get_json()
+    boxes = data.get('boxes')
+    picName = data.get('picName')
+    input_data = {
+        'picName': picName,
+        'boxes': boxes,
+        'input': 'A'
+    }
+    with open('input_data.json', 'w') as f:
+        json.dump(input_data, f)
+    
+    # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
+
+    try:
+        subprocess.Popen(["python", "segment_anything_box.py"])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    return jsonify({'success': True}), 200
+
+
+@app.route('/api/save-boxesB', methods=['POST'])
+def save_boxesB():
+    data = request.get_json()
+    boxes = data.get('boxes')
+    picName = data.get('picName')
+    input_data = {
+        'picName': picName,
+        'boxes': boxes,
+        'input': 'B'
+    }
+    with open('input_data.json', 'w') as f:
+        json.dump(input_data, f)
+    
+    # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
+
+    try:
+        subprocess.Popen(["python", "segment_anything_box.py"])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    return jsonify({'success': True}), 200
+
+@app.route('/api/save-pointsA', methods=['POST'])
+def save_pointsA():
+    data = request.get_json()
+    points = data.get('points')
+    picName = data.get('picName')
+
+    input_data = {
+        'picName': picName,
+        'boxes': [],
+        'points': points, 
+        'input': 'A'
+    }
+
+    with open('input_data.json', 'w') as f:
+        json.dump(input_data, f)
+    
+     # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
+
+    try:
+        subprocess.Popen(["python", "segment_anything_dot.py"])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    return jsonify({'success': True}), 200
+
 @app.route('/api/save-points', methods=['POST'])
 def save_points():
     data = request.get_json()
@@ -88,7 +199,47 @@ def save_points():
     input_data = {
         'picName': picName,
         'boxes': [],
-        'points': points
+        'points': points, 
+        'input': 'A'
+    }
+
+    with open('input_data.json', 'w') as f:
+        json.dump(input_data, f)
+    
+     # Full paths
+    path_a = os.path.join(app.root_path, 'segmented_A.json')
+    path_b = os.path.join(app.root_path, 'segmented_B.json')
+
+    a_exists = os.path.exists(path_a)
+    b_exists = os.path.exists(path_b)
+
+    # Delete based on the rule
+    if a_exists and b_exists:
+        os.remove(path_a)
+        os.remove(path_b)
+        print("Removed both segmented_A.json and segmented_B.json")
+    elif not a_exists and b_exists:
+        os.remove(path_b)
+        print("Removed segmented_B.json because A was not present")
+
+    try:
+        subprocess.Popen(["python", "segment_anything_dot.py"])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    return jsonify({'success': True}), 200
+
+@app.route('/api/save-pointsB', methods=['POST'])
+def save_pointsB():
+    data = request.get_json()
+    points = data.get('points')
+    picName = data.get('picName')
+
+    input_data = {
+        'picName': picName,
+        'boxes': [],
+        'points': points, 
+        'input': 'B'
     }
 
     with open('input_data.json', 'w') as f:
@@ -173,9 +324,10 @@ def get_result():
 @app.route('/api/calculate-similarity', methods=['POST'])
 def calculate_similarity():
     try:
-        process = subprocess.run(["python", "model.py"], capture_output=True, text=True, check=True)
-        print("Model stdout:", process.stdout)
-        print("Model stderr:", process.stderr)
+        #process = subprocess.run(["python", "model.py"], capture_output=True, text=True, check=True)
+        #print("Model stdout:", process.stdout)
+        #print("Model stderr:", process.stderr)
+        print("hello world")
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     return jsonify({'success': True}), 200
@@ -185,8 +337,7 @@ def clear_cache():
     folders_to_clear = [
         #os.path.join(app.root_path, 'static', 'segmented_images'),
         os.path.join(app.root_path, 'uploads'),
-        os.path.join(app.root_path, 'static', 'A'),
-        os.path.join(app.root_path, 'static', 'B')
+        os.path.join(app.root_path, 'static', 'Query'),
     ]
 
     for folder in folders_to_clear:
@@ -277,6 +428,129 @@ def get_combined_image():
         if not os.path.exists(file_path):
             combined_name = None
     return jsonify({"combinedImageName": combined_name}), 200
+
+
+@app.route('/api/heatmap-data', methods=['GET'])
+def get_heatmap_data():
+    # Load the result.json file.
+    with open('result.json', 'r') as f:
+        data = json.load(f)
+    
+    # The data is expected to have a structure like:
+    # {
+    #    "K_0": [
+    #        { "Pool": "K_1", "Score": 0.9108, "Logit": 13.5651, ... },
+    #        { "Pool": "I_1", "Score": 0.0484, "Logit": 10.6296, ... },
+    #         ...
+    #    ],
+    #    "K_1": [ ... ],
+    #    ...
+    # }
+    
+    # 1. Extract query keys from the top-level dictionary.
+    query_keys = list(data.keys())
+    
+    # 2. Build the set of all pool keys by combining:
+    #    - the query keys themselves (since a query key may also appear as a pool key), and
+    #    - all the "Pool" fields from the data.
+    pool_keys_set = set(query_keys)
+    for query in data:
+        for item in data[query]:
+            pool_keys_set.add(item["Pool"])
+    
+    # 3. Order the pool keys such that the ones that are query keys appear first.
+    #    First, sort the query keys (you can choose to keep the original order if you like),
+    #    then append the remainder of the pool keys sorted.
+    sorted_query_keys = sorted(query_keys)
+    remaining_pools = sorted(list(pool_keys_set - set(query_keys)))
+    pool_keys = sorted_query_keys + remaining_pools
+
+    # 4. (Optional) Also sort the query keys for consistency
+    query_keys = sorted_query_keys
+
+    # 5. Initialize the matrix: for each pool (row) and query (column)
+    #    If pool equals query (diagonal cells) we set it to None,
+    #    otherwise we initialize as None (to be updated later)
+    matrix = {}
+    for pool in pool_keys:
+        matrix[pool] = {}
+        for query in query_keys:
+            if pool == query:
+                matrix[pool][query] = None   # Diagonal cells (will be grey on frontend)
+            else:
+                matrix[pool][query] = None
+
+    # 6. Fill in the matrix with data from the JSON.
+    for query in query_keys:
+        for item in data[query]:
+            pool = item["Pool"]
+            # Only update non-diagonal cells.
+            if pool != query:
+                matrix[pool][query] = {
+                    "score": item.get("Score"),
+                    "logit": item.get("Logit")
+                }
+    
+    # 7. Build the data structure expected by the frontend.
+    #    Each row represents a pool key and includes an array of column objects,
+    #    each containing the corresponding query key and its cell data.
+    heatmap_data = []
+    for pool in pool_keys:
+        row = {"poolKey": pool, "columns": []}
+        for query in query_keys:
+            row["columns"].append({
+                "queryKey": query,
+                "score": matrix[pool][query]  # This is either an object or None (for diagonal)
+            })
+        heatmap_data.append(row)
+    
+    return jsonify({
+        "queryKeys": query_keys,
+        "poolKeys": pool_keys,
+        "data": heatmap_data
+    })
+
+
+@app.route('/api/ranking-data', methods=['GET'])
+def get_ranking_data():
+    # Load the result JSON file.
+    with open('result.json', 'r') as f:
+        data = json.load(f)
+    
+    # Assume each top-level key is a query key.
+    # Optionally sort the query keys.
+    query_keys = list(data.keys())
+    query_keys.sort()
+    
+    # Build the ranking data structure.
+    # For each query key, we return only the top 5 pool results.
+    ranking_data = {}
+    for query in query_keys:
+        # The original file already has the pool items sorted.
+        ranking_data[query] = data[query][:5]
+    
+    return jsonify({
+        "queryKeys": query_keys,
+        "rankingData": ranking_data
+    })
+
+
+@app.route('/api/copy-irregular', methods=['POST'])
+def copy_irregular_files():
+    source_dir = 'static/Query/segmented_irregular/'
+    dest_dir = 'static/Pool/segmented_irregular/'
+
+    # Ensure destination directory exists
+    os.makedirs(dest_dir, exist_ok=True)
+
+    # Copy all files
+    for filename in os.listdir(source_dir):
+        src_path = os.path.join(source_dir, filename)
+        dst_path = os.path.join(dest_dir, filename)
+        if os.path.isfile(src_path):
+            shutil.copy2(src_path, dst_path)
+
+    return jsonify({"status": "success", "message": "Files copied."})
 
 if __name__ == '__main__':
     app.run(debug=True, host='localhost', port=8000)
