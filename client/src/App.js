@@ -25,7 +25,7 @@ function Home() {
   return (
     <div className="d-flex flex-column vh-100 bg-light">
       <div className="d-flex flex-grow-1 border-top border-bottom">
-        <div className="border-end overflow-auto">
+        <div className="overflow-auto">
           <AnnotationPanel side="Query" />
         </div>
       </div>

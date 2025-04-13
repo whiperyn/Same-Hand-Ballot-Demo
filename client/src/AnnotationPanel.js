@@ -310,37 +310,32 @@ export default function AnnotationPanel() {
           {/* Segment buttons grouped by type */}
           <div className="btn-group" role="group">
             <button
-              onClick={() => handleSegment('box', 'A')}
-              disabled={!picName || boxes.length === 0}
+              onClick={() => handleSegment(mode, 'A')}
+              disabled={
+                !picName || 
+                (mode === 'box' && boxes.length === 0) || 
+                (mode === 'point' && points.length === 0)
+              }
               className="btn btn-outline-primary"
             >
-              Segment (Boxes) - Query
+              Segment {mode ? ` (${mode.charAt(0).toUpperCase() + mode.slice(1)})` : ''} - Query
+
             </button>
             <button
-              onClick={() => handleSegment('box', 'B')}
-              disabled={!picName || boxes.length === 0}
+              onClick={() => handleSegment(mode, 'B')}
+              disabled={
+                !picName || 
+                (mode === 'box' && boxes.length === 0) || 
+                (mode === 'point' && points.length === 0)
+              }
+              
               className="btn btn-outline-primary"
             >
-              Segment (Boxes) - Pool
+              Segment {mode ? ` (${mode.charAt(0).toUpperCase() + mode.slice(1)})` : ''} - Pool
+
             </button>
           </div>
 
-          <div className="btn-group" role="group">
-            <button
-              onClick={() => handleSegment('point', 'A')}
-              disabled={!picName || points.length === 0}
-              className="btn btn-outline-success"
-            >
-              Segment (Points) - Query
-            </button>
-            <button
-              onClick={() => handleSegment('point', 'B')}
-              disabled={!picName || points.length === 0}
-              className="btn btn-outline-success"
-            >
-              Segment (Points) - Pool
-            </button>
-          </div>
         </div>
 
         {/* Alert for clearing cache */}
