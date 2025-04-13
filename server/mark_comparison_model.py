@@ -18,6 +18,7 @@ from tensorflow.keras.layers import Dense
 import keras.backend as K
 import numpy as np
 import time
+from glob import glob
 
 start_time = time.time()
 with open('input_data.json', 'r') as f:
@@ -239,107 +240,95 @@ def preprocess_single_image(image_path):
     return image
 
 
-# -------------------------------
 
-# # test on 3 marks, 2 same hand, 1 different hand (if you would like to see the performance of the model, uncomment this part)
-
-# # Your image paths
-# img_path1 = "./static/segmented_images/examples/0_MER01 BATCH 1-13.jpg"  # same hand, mark 0 from MER01 BATCH 1-13
-# img_path2 = "./static/segmented_images/examples/1_MER01 BATCH 1-13.jpg"  # same hand, mark 1 from MER01 BATCH 1-13
-# img_path3 = "./static/segmented_images/examples/2_MER02 BATCH 1-13.jpg"  # different hand, mark 0 from MER02 BATCH 1-13
-
-# # Preprocess each image
-# image1 = preprocess_single_image(img_path1)
-# image2 = preprocess_single_image(img_path2)
-# image3 = preprocess_single_image(img_path3)
-
-# # Form a batch of 2 pairs:
-# # Pair 1: (image1, image2)
-# # Pair 2: (image1, image3)
-# X1 = tf.stack([image1, image1], axis=0)  # shape: (2, 51, 51, 3)
-# X2 = tf.stack([image2, image3], axis=0)  # shape: (2, 51, 51, 3)
-
-# # Compute similarity scores
-# scores = get_similarity_scores(clip_model, X1, X2, temperature=temperature)
-
-# # Print results
-# print("\n--- Similarity Scores ---")
-# print(f"Pair 1 (same hand):      {scores[0]:.4f} → {'Same' if scores[0] >= optimal_threshold else 'Different'}")
-# print(f"Pair 2 (different hand): {scores[1]:.4f} → {'Same' if scores[1] >= optimal_threshold else 'Different'}")
-
-
-# -------------------------------
-
-# Your image paths
-img_path1 = "./static/segmented_images/examples/0_20111129114909694_0004.jpg"  # mark 0 
-img_path2 = "./static/segmented_images/examples/0_20111129114909694_0014.jpg"  # mark 1 
-
-# Preprocess each image
-image1 = preprocess_single_image(img_path1)
-image2 = preprocess_single_image(img_path2)
-
-# Form a batch of 2 pairs:
-# Pair: (image1, image2)
-X1 = tf.stack([image1], axis=0)  # shape: (2, 51, 51, 3)
-X2 = tf.stack([image2], axis=0)  # shape: (2, 51, 51, 3)
-
-# Compute similarity scores
-scores = get_similarity_scores(clip_model, X1, X2, temperature=temperature)
-
-# Print results
-print("\n--- Similarity Scores ---")
-print(f"Detected Pair (same hand):      {scores[0]:.4f} → {'Same' if scores[0] >= optimal_threshold else 'Different'}")
+def get_logits_scores(model, X1, X2, temperature=0.07):
+    """
+    Return cosine similarity logits (before sigmoid) for a list of image pairs.
+    """
+    emb_a, emb_b = model((X1, X2), training=False)
+    norm_a = tf.math.l2_normalize(emb_a, axis=1)
+    norm_b = tf.math.l2_normalize(emb_b, axis=1)
+    logits = tf.reduce_sum(norm_a * norm_b, axis=1) / temperature  # shape: (N,)
+    return logits.numpy()
 
 
 
-# Load or initialize result.json
-result_file = "result.json"
+# # -------------------------------
+# # mark image retrieval
+# # -------------------------------
+# Collect paths with both .jpg and .png extensions
+def collect_image_paths(folder):
+    return sorted(
+        glob(os.path.join(folder, "*.jpg")) +
+        glob(os.path.join(folder, "*.png"))
+    )
 
-if os.path.exists(result_file):
-    with open(result_file, "r") as f:
-        similarity_data = json.load(f)
-else:
-    similarity_data = {
-        "similarity1": "N/A",
-        "similarity2": "N/A",
-        "similarity3": "N/A",
-        "overall_similarity": "N/A"
-    }
+# Paths
+query_folder = "./static/Query/segmented_irregular/"
+pool_folder = "./static/Pool/segmented_irregular/"
+
+query_paths = collect_image_paths(query_folder)
+pool_paths = collect_image_paths(pool_folder)
 
 
+def preprocess_single_image(image_path):
+    image = Image.open(image_path).convert('RGB')
+    image = np.asarray(image).astype(np.float32)
+    image = 255.0 - image
+    image = tf.image.resize_with_crop_or_pad(image, 51, 51)
+    image = image / 255.0
+    return image
 
-current_score = round(float(scores[0]), 4)
+def retrieve_for_query(query_path, pool_paths_all, temperature):
+    query_image = preprocess_single_image(query_path)
+    
+    # Prepare pairings
+    X1 = tf.stack([query_image] * len(pool_paths_all), axis=0)
+    X2 = tf.stack([preprocess_single_image(p) for p in pool_paths_all], axis=0)
 
-# Update the first available "N/A" similarity field
-updated = False
-for key in ["similarity1", "similarity2", "similarity3"]:
-    if similarity_data[key] == "N/A":
-        similarity_data[key] = current_score
-        print(f"✅ Updated {key} with score: {current_score}")
-        updated = True
-        break
+    # Compute logits
+    emb_a, emb_b = clip_model((X1, X2), training=False)
+    norm_a = tf.math.l2_normalize(emb_a, axis=1)
+    norm_b = tf.math.l2_normalize(emb_b, axis=1)
+    logits = tf.reduce_sum(norm_a * norm_b, axis=1) / temperature
 
-if not updated:
-    print("⚠️ All similarity scores are already filled. No update made.")
+    # Softmax on logits
+    softmax_scores = tf.nn.softmax(logits).numpy()
+    return softmax_scores, logits.numpy(), pool_paths_all
 
-# Recalculate overall_similarity based on how many valid scores we have
-valid_scores = [
-    float(similarity_data[key]) for key in ["similarity1", "similarity2", "similarity3"]
-    if similarity_data[key] != "N/A"
-]
+# 📝 Dictionary for ranked recommendations
+ranked_output = {}
 
-if valid_scores:
-    overall_similarity = round(sum(valid_scores) / len(valid_scores), 4)
-    similarity_data["overall_similarity"] = overall_similarity
-else:
-    similarity_data["overall_similarity"] = "N/A"
+# 🔁 Loop through queries
+for query_path in query_paths:
+    query_name = os.path.basename(query_path).replace("segmented_irregular_", "").replace(".jpg", "").replace(".png", "")
+    dynamic_pool = pool_paths + [p for p in query_paths if p != query_path]
 
-# Save back to result.json
-with open(result_file, "w") as f:
-    json.dump(similarity_data, f, indent=4)
+    softmax_scores, logits, compared_paths = retrieve_for_query(query_path, dynamic_pool, temperature)
 
-print("📁 Saved updated similarity results to result.json")
+    # 🔠 Sort by softmax score
+    sorted_indices = np.argsort(-softmax_scores)
 
-end_time = time.time()
-print(f"Execution time: {end_time - start_time:.2f} seconds")
-# -------------------------------
+    print(f"\n🔍 Query: {os.path.basename(query_path)}")
+
+    ranked_output[query_name] = []
+    for idx in sorted_indices:
+        pool_path = compared_paths[idx]
+        pool_name = os.path.basename(pool_path).replace("segmented_irregular_", "").replace(".jpg", "").replace(".png", "")
+        logit_val = round(float(logits[idx]), 4)
+        score_val = round(float(softmax_scores[idx]), 4)
+
+        print(f"{pool_name:} → Score: {score_val:.4f} | Logit: {logit_val:.4f}")
+
+        ranked_output[query_name].append({
+            "Pool": pool_name,
+            "Score": score_val,
+            "Logit": logit_val,
+            "Query_path": query_path,
+            "Pool_path": pool_path
+        })
+# 💾 Save ranked results by query
+with open("result.json", "w") as f:
+    json.dump(ranked_output, f, indent=4)
+
+print(f"📁 Saved ranked results for each query to result.json")
