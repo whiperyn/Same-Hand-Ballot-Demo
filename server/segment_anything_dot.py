@@ -9,6 +9,30 @@ import os
 import time
 import json
 
+def get_and_increment_alias(alias_file_path):
+    # If file doesn't exist, start from alias 1
+    if not os.path.exists(alias_file_path):
+        with open(alias_file_path, 'w') as f:
+            f.write('1')
+        return 'alias1'
+    
+    with open(alias_file_path, 'r+') as f:
+        content = f.read().strip()
+        try:
+            number = int(content)
+        except ValueError:
+            number = 1  # fallback if file content is invalid
+        
+        alias = f'alias{number}'
+        
+        # Move pointer to beginning and update the number
+        f.seek(0)
+        f.write(str(number + 1))
+        f.truncate()
+        
+        return alias
+
+
 def show_mask(mask, ax, random_color=False):
     if random_color:
         color = np.concatenate([np.random.random(3), np.array([0.6])], axis=0)
@@ -181,7 +205,7 @@ def save_bounding_box_cropped_segmentation(original_image_np, mask, filename, th
     cv2.imwrite(filename, cropped_bgr)
     print(f"Bounding box cropped segmentation saved to {filename}")
 
-def prepare_output_directories():
+def prepare_output_directories(folder):
     '''
     If static/A/ is empty → saves both versions under A/segmented_*.
     If static/A/ is not empty but B/ is → uses B/segmented_*.
@@ -198,20 +222,16 @@ def prepare_output_directories():
                 for dir in dirs:
                     os.rmdir(os.path.join(root, dir))
 
-    base_a = "static/Query"
-    base_b = "static/Pool"
-
-    if is_dir_empty(base_a):
-        dir_irregular = os.path.join(base_a, "segmented_irregular")
-        dir_box = os.path.join(base_a, "segmented_box")
-    elif is_dir_empty(base_b):
-        dir_irregular = os.path.join(base_b, "segmented_irregular")
-        dir_box = os.path.join(base_b, "segmented_box")
+    base = f"static/{folder}"
+    if base == "static/Query":
+        dir_irregular = os.path.join(base, "segmented_irregular")
+        dir_box = os.path.join(base, "segmented_box")
+    elif base == "static/Pool":
+        dir_irregular = os.path.join(base, "new_segmented_irregular")
+        dir_box = os.path.join(base, "new_segmented_box")
     else:
-        clear_directory(base_a)
-        clear_directory(base_b)
-        dir_irregular = os.path.join(base_a, "segmented_irregular")
-        dir_box = os.path.join(base_a, "segmented_box")
+        raise ValueError(f"Unrecognized base path: {base}")
+
 
     os.makedirs(dir_irregular, exist_ok=True)
     os.makedirs(dir_box, exist_ok=True)
@@ -228,6 +248,7 @@ processor = SamProcessor.from_pretrained("facebook/sam-vit-huge")
 
 picName = data.get('picName')
 points = data.get('points')
+folder_base = data.get('input')
 print("Segmenting for picture:", picName)
 
 # Load your image ("ballot.jpg") and fix orientation via EXIF if needed.
@@ -266,7 +287,9 @@ print(f"Found {num_candidates} candidate mask(es) for the given input points.")
 
 # Loop over each candidate mask and save three versions.
 # get the correct folder to save the images
-output_dir_irregular, output_dir_box = prepare_output_directories()
+output_dir_irregular, output_dir_box = prepare_output_directories(folder_base)
+alias_file = 'static/alias.txt'
+alias = get_and_increment_alias(alias_file)
 for idx in range(num_candidates):
     candidate_mask = mask_group[idx]
     candidate_mask = candidate_mask.cpu().detach().numpy()
@@ -274,22 +297,22 @@ for idx in range(num_candidates):
     
     # the first one is to extract the segmentation in the original image (exported size = original image size)
     # it has some error but because it's not used, so nvm
-    filename1 = f"segmentation_full_size/segmented_overlay_{idx}.png"
+    filename1 = f"segmentation_full_size/segmented_overlay_{alias}_{idx}.png"
     #save_segmented_in_original(original_image_np, candidate_mask, filename1, threshold=0.5)
     
     # Version 2: segmented part only, irregular shape
     original_image_np_origin = original_image_np.copy()  # Ensure we don't modify the original image
 
-    filename2 = os.path.join(output_dir_irregular, f"segmented_irregular_{idx}.png")
+    filename2 = os.path.join(output_dir_irregular, f"segmented_irregula_{alias}_{idx}.png")
     save_irregular_segmentation(original_image_np, candidate_mask, filename2, threshold=0.5)
     
     # Version 3: segmented part with minimum bounding box
-    filename3 = os.path.join(output_dir_box, f"segmented_bounding_box_{idx}.png")
+    filename3 = os.path.join(output_dir_box, f"segmented_bounding_box_{alias}_{idx}.png")
     save_bounding_box_cropped_segmentation(original_image_np_origin, candidate_mask, filename3, threshold=0.5)
 
 # Write a generated image json file
 # Determine which folder we saved to
-used_dir = "A" if "A" in output_dir_irregular else "B"
+used_dir = "A" if "Query" in output_dir_irregular else "B"
 json_output_path = f"segmented_{used_dir}.json"
 
 # Build relative file paths for JSON

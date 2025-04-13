@@ -53,7 +53,7 @@ def save_boxesA():
     input_data = {
         'picName': picName,
         'boxes': boxes,
-        'input': 'A'
+        'input': 'Query'
     }
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
@@ -66,13 +66,8 @@ def save_boxesA():
     b_exists = os.path.exists(path_b)
 
     # Delete based on the rule
-    if a_exists and b_exists:
+    if a_exists:
         os.remove(path_a)
-        os.remove(path_b)
-        print("Removed both segmented_A.json and segmented_B.json")
-    elif not a_exists and b_exists:
-        os.remove(path_b)
-        print("Removed segmented_B.json because A was not present")
 
     try:
         subprocess.Popen(["python", "segment_anything_box.py"])
@@ -124,26 +119,21 @@ def save_boxesB():
     input_data = {
         'picName': picName,
         'boxes': boxes,
-        'input': 'B'
+        'input': 'Pool'
     }
     with open('input_data.json', 'w') as f:
         json.dump(input_data, f)
     
     # Full paths
-    path_a = os.path.join(app.root_path, 'segmented_A.json')
+   
     path_b = os.path.join(app.root_path, 'segmented_B.json')
 
-    a_exists = os.path.exists(path_a)
+
     b_exists = os.path.exists(path_b)
 
     # Delete based on the rule
-    if a_exists and b_exists:
-        os.remove(path_a)
+    if b_exists:
         os.remove(path_b)
-        print("Removed both segmented_A.json and segmented_B.json")
-    elif not a_exists and b_exists:
-        os.remove(path_b)
-        print("Removed segmented_B.json because A was not present")
 
     try:
         subprocess.Popen(["python", "segment_anything_box.py"])
@@ -161,7 +151,7 @@ def save_pointsA():
         'picName': picName,
         'boxes': [],
         'points': points, 
-        'input': 'A'
+        'input': 'Query'
     }
 
     with open('input_data.json', 'w') as f:
@@ -175,13 +165,8 @@ def save_pointsA():
     b_exists = os.path.exists(path_b)
 
     # Delete based on the rule
-    if a_exists and b_exists:
+    if a_exists:
         os.remove(path_a)
-        os.remove(path_b)
-        print("Removed both segmented_A.json and segmented_B.json")
-    elif not a_exists and b_exists:
-        os.remove(path_b)
-        print("Removed segmented_B.json because A was not present")
 
     try:
         subprocess.Popen(["python", "segment_anything_dot.py"])
@@ -239,7 +224,7 @@ def save_pointsB():
         'picName': picName,
         'boxes': [],
         'points': points, 
-        'input': 'B'
+        'input': 'Pool'
     }
 
     with open('input_data.json', 'w') as f:
@@ -253,13 +238,9 @@ def save_pointsB():
     b_exists = os.path.exists(path_b)
 
     # Delete based on the rule
-    if a_exists and b_exists:
-        os.remove(path_a)
+    if b_exists:
         os.remove(path_b)
-        print("Removed both segmented_A.json and segmented_B.json")
-    elif not a_exists and b_exists:
-        os.remove(path_b)
-        print("Removed segmented_B.json because A was not present")
+
 
     try:
         subprocess.Popen(["python", "segment_anything_dot.py"])
@@ -270,7 +251,7 @@ def save_pointsB():
 
 @app.route('/api/generated-imageA', methods=['GET'])
 def get_generated_imageA():
-    folder_path = os.path.join(app.root_path, 'static', 'A', 'segmented_box')
+    folder_path = os.path.join(app.root_path, 'static', 'Query', 'segmented_irregular')
     json_file_path = os.path.join(app.root_path, 'segmented_A.json')
 
     if not os.path.exists(json_file_path):
@@ -287,7 +268,7 @@ def get_generated_imageA():
 
 @app.route('/api/generated-imageB', methods=['GET'])
 def get_generated_imageB():
-    folder_path = os.path.join(app.root_path, 'static', 'B', 'segmented_box')
+    folder_path = os.path.join(app.root_path, 'static', 'Pool', 'new_segmented_irregular')
     json_file_path = os.path.join(app.root_path, 'segmented_B.json')
     
     if not os.path.exists(json_file_path):
@@ -338,6 +319,8 @@ def clear_cache():
         #os.path.join(app.root_path, 'static', 'segmented_images'),
         os.path.join(app.root_path, 'uploads'),
         os.path.join(app.root_path, 'static', 'Query'),
+        os.path.join(app.root_path, 'static', 'Pool', 'new_segmented_box'),
+        os.path.join(app.root_path, 'static', 'Pool', 'new_segmented_irregular'),
     ]
 
     for folder in folders_to_clear:
@@ -368,8 +351,8 @@ def clear_cache():
         "overall_similarity": -1
     }
 
-    with open("result.json", "w") as f:
-        json.dump(similarity_data, f, indent=4)
+    '''with open("result.json", "w") as f:
+        json.dump(similarity_data, f, indent=4)'''
 
     with open("input_data.json", "w") as f:
         f.write("{}")
@@ -536,19 +519,21 @@ def get_ranking_data():
 
 
 @app.route('/api/copy-irregular', methods=['POST'])
+@cross_origin()
 def copy_irregular_files():
-    source_dir = 'static/Query/segmented_irregular/'
+    source_dirs = ['static/Query/segmented_irregular/', 'static/Pool/new_segmented_irregular/']
     dest_dir = 'static/Pool/segmented_irregular/'
 
     # Ensure destination directory exists
     os.makedirs(dest_dir, exist_ok=True)
 
     # Copy all files
-    for filename in os.listdir(source_dir):
-        src_path = os.path.join(source_dir, filename)
-        dst_path = os.path.join(dest_dir, filename)
-        if os.path.isfile(src_path):
-            shutil.copy2(src_path, dst_path)
+    for source_dir in source_dirs:
+        for filename in os.listdir(source_dir):
+            src_path = os.path.join(source_dir, filename)
+            dst_path = os.path.join(dest_dir, filename)
+            if os.path.isfile(src_path):
+                shutil.copy2(src_path, dst_path)
 
     return jsonify({"status": "success", "message": "Files copied."})
 

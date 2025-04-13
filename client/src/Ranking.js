@@ -1,6 +1,8 @@
 // src/Ranking.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Make sure this is imported
+
 
 // Helper function to update image paths to point to the Flask server.
 const transformImagePath = (path) => {
@@ -11,6 +13,9 @@ const transformImagePath = (path) => {
 
 const Ranking = () => {
   const [rankingInfo, setRankingInfo] = useState(null);
+
+    const navigate = useNavigate(); // Add this inside your component
+
 
   useEffect(() => {
     fetch('http://localhost:8000/api/ranking-data')
@@ -147,9 +152,31 @@ const Ranking = () => {
         <Link to="/HeatmapChart" className="btn btn-secondary me-2">
           Go Back to Heatmap
         </Link>
-        <Link to="/" className="btn btn-primary">
-          Finish
-        </Link>
+        <button
+            className="btn btn-primary"
+            onClick={async () => {
+                try {
+                const response = await fetch('http://localhost:8000/api/copy-irregular', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    console.log('✅ Files successfully copied.');
+                    navigate('/'); // Navigate after successful copy
+                } else {
+                    console.error('❌ Failed to copy files.');
+                }
+                } catch (error) {
+                console.error('🚨 Error while copying files:', error);
+                }
+            }}
+            >
+            Finish
+        </button>
+
       </div>
     </div>
   );

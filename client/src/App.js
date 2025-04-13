@@ -24,10 +24,10 @@ function Home() {
     <div className="d-flex flex-column vh-100 bg-light">
       <div className="d-flex flex-grow-1 border-top border-bottom">
         <div className="w-50 border-end overflow-auto">
-          <AnnotationPanel side="A" />
+          <AnnotationPanel side="Query" />
         </div>
         <div className="w-50 overflow-auto">
-          <AnnotationPanel side="B" />
+          <AnnotationPanel side="Pool" />
         </div>
       </div>
       <div className="border-top p-3 text-end bg-white">

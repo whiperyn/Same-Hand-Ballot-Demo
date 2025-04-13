@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function AnnotationPanel({ side }) {
+  const sideLabel = side === "Query" ? "A" : "B";
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const [image, setImage] = useState(null);
@@ -15,6 +16,7 @@ export default function AnnotationPanel({ side }) {
   const [thumbnails, setThumbnails] = useState([]);
   const [loadingSegments, setLoadingSegments] = useState(false);
   const [cacheCleared, setCacheCleared] = useState(false);
+
   const MAX_WIDTH = 800;
 
   const getMousePos = (e) => {
@@ -33,6 +35,8 @@ export default function AnnotationPanel({ side }) {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(image, 0, 0, image.width * scaleFactor, image.height * scaleFactor);
+
+    // Draw boxes
     boxes.forEach(([x1, y1, x2, y2], idx) => {
       ctx.beginPath();
       ctx.rect(x1 * scaleFactor, y1 * scaleFactor, (x2 - x1) * scaleFactor, (y2 - y1) * scaleFactor);
@@ -43,6 +47,8 @@ export default function AnnotationPanel({ side }) {
       ctx.font = 'bold 22px Arial';
       ctx.fillText(idx, x1 * scaleFactor + 4, y1 * scaleFactor + 16);
     });
+
+    // Draw points
     points.forEach(([[x, y]], idx) => {
       ctx.beginPath();
       ctx.arc(x * scaleFactor, y * scaleFactor, 5, 0, 2 * Math.PI);
@@ -56,14 +62,16 @@ export default function AnnotationPanel({ side }) {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
     const formData = new FormData();
     formData.append('image', file);
+
     fetch('http://localhost:8000/api/upload-image', {
       method: 'POST',
       body: formData,
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setPicName(data.filename);
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -78,6 +86,9 @@ export default function AnnotationPanel({ side }) {
           img.src = event.target.result;
         };
         reader.readAsDataURL(file);
+      })
+      .catch((err) => {
+        console.error('Error uploading image:', err);
       });
   };
 
@@ -88,7 +99,7 @@ export default function AnnotationPanel({ side }) {
       setIsDrawing(true);
     } else if (mode === 'point') {
       const newPoint = [[pos.x / scaleFactor, pos.y / scaleFactor]];
-      setPoints(prev => [...prev, newPoint]);
+      setPoints((prev) => [...prev, newPoint]);
       drawCanvas();
     }
   };
@@ -97,12 +108,13 @@ export default function AnnotationPanel({ side }) {
     if (!isDrawing || mode !== 'box') return;
     const pos = getMousePos(e);
     setIsDrawing(false);
+
     const x1 = Math.min(startPos.x, pos.x);
     const y1 = Math.min(startPos.y, pos.y);
     const x2 = Math.max(startPos.x, pos.x);
     const y2 = Math.max(startPos.y, pos.y);
     const newBox = [x1 / scaleFactor, y1 / scaleFactor, x2 / scaleFactor, y2 / scaleFactor];
-    setBoxes(prev => [...prev, newBox]);
+    setBoxes((prev) => [...prev, newBox]);
   };
 
   const handleMouseMove = (e) => {
@@ -110,10 +122,12 @@ export default function AnnotationPanel({ side }) {
     drawCanvas();
     const ctx = canvasRef.current.getContext('2d');
     const pos = getMousePos(e);
+
     const x1 = Math.min(startPos.x, pos.x);
     const y1 = Math.min(startPos.y, pos.y);
     const x2 = Math.max(startPos.x, pos.x);
     const y2 = Math.max(startPos.y, pos.y);
+
     ctx.beginPath();
     ctx.rect(x1, y1, x2 - x1, y2 - y1);
     ctx.strokeStyle = 'red';
@@ -122,8 +136,11 @@ export default function AnnotationPanel({ side }) {
   };
 
   const handleUndo = () => {
-    if (mode === 'box') setBoxes(prev => prev.slice(0, -1));
-    else if (mode === 'point') setPoints(prev => prev.slice(0, -1));
+    if (mode === 'box') {
+      setBoxes((prev) => prev.slice(0, -1));
+    } else if (mode === 'point') {
+      setPoints((prev) => prev.slice(0, -1));
+    }
   };
 
   const handleReset = () => {
@@ -133,6 +150,7 @@ export default function AnnotationPanel({ side }) {
     setPicName('');
     setImage(null);
     if (fileInputRef.current) fileInputRef.current.value = null;
+
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
@@ -141,22 +159,44 @@ export default function AnnotationPanel({ side }) {
   };
 
   const handleClearCache = async () => {
-    await fetch('http://localhost:8000/api/clear-cache', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    setThumbnails([]);
-    setCacheCleared(true);
-    setTimeout(() => setCacheCleared(false), 3000);
+    try {
+      await fetch('http://localhost:8000/api/clear-cache', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      // Clear out the local data just like handleReset()
+      setBoxes([]);
+      setPoints([]);
+      setThumbnails([]);
+      setPicName('');
+      setImage(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      setCacheCleared(true);
+      setTimeout(() => setCacheCleared(false), 3000);
+    } catch (err) {
+      console.error('Error clearing cache:', err);
+    }
   };
 
+  // Segment function (same as before)
   const handleSegment = (type) => {
-    const url = type === 'box' ? 'save-boxes' : 'save-points';
+    const baseEndpoint = type === 'box' ? 'save-boxes' : 'save-points';
+    const url = `http://localhost:8000/api/${baseEndpoint}${sideLabel}`;
+
     const payload = {
       picName,
       [type === 'box' ? 'boxes' : 'points']: type === 'box' ? boxes : points,
     };
-    fetch(`http://localhost:8000/api/${url}`, {
+
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -164,9 +204,13 @@ export default function AnnotationPanel({ side }) {
       .then(() => {
         setLoadingSegments(true);
         pollForThumbnails();
+      })
+      .catch((err) => {
+        console.error('Error segmenting image:', err);
       });
   };
 
+  // Poll for generated images (same as before)
   const pollForThumbnails = () => {
     let elapsed = 0;
     const intervalId = setInterval(() => {
@@ -176,21 +220,22 @@ export default function AnnotationPanel({ side }) {
         setLoadingSegments(false);
         return;
       }
-      fetch(`http://localhost:8000/api/generated-image${side}`)
-        .then(res => res.json())
-        .then(data => {
+      fetch(`http://localhost:8000/api/generated-image${sideLabel}`)
+        .then((res) => res.json())
+        .then((data) => {
           if (data.images && data.images.length > 0) {
             setThumbnails(data.images);
             setLoadingSegments(false);
             clearInterval(intervalId);
           }
         })
-        .catch(err => {
-          console.error("Error checking segmented images:", err);
+        .catch((err) => {
+          console.error('Error checking segmented images:', err);
         });
     }, 3000);
   };
 
+  // Redraw canvas on changes
   useEffect(() => {
     drawCanvas();
   }, [image, boxes, points]);
@@ -198,11 +243,28 @@ export default function AnnotationPanel({ side }) {
   return (
     <div className="d-flex h-100 p-2 gap-2">
       <div className="w-75 d-flex flex-column">
+        {/* Toolbar */}
         <div className="d-flex flex-wrap gap-2 mb-2 align-items-center">
-          <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="form-control w-auto" />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="form-control w-auto"
+          />
           <div className="btn-group" role="group">
-            <button onClick={() => setMode('box')} className={`btn ${mode === 'box' ? 'btn-primary' : 'btn-outline-primary'}`}>Box Mode</button>
-            <button onClick={() => setMode('point')} className={`btn ${mode === 'point' ? 'btn-success' : 'btn-outline-success'}`}>Point Mode</button>
+            <button
+              onClick={() => setMode('box')}
+              className={`btn ${mode === 'box' ? 'btn-primary' : 'btn-outline-primary'}`}
+            >
+              Box Mode
+            </button>
+            <button
+              onClick={() => setMode('point')}
+              className={`btn ${mode === 'point' ? 'btn-success' : 'btn-outline-success'}`}
+            >
+              Point Mode
+            </button>
           </div>
           <button
             onClick={handleUndo}
@@ -211,16 +273,36 @@ export default function AnnotationPanel({ side }) {
           >
             Undo
           </button>
-          <button onClick={handleReset} className="btn btn-outline-secondary">Reset</button>
-          <button onClick={handleClearCache} className="btn btn-outline-danger">Clear Cache</button>
-          <button onClick={() => handleSegment('box')} disabled={!picName || boxes.length === 0} className="btn btn-outline-primary">Segment (Boxes)</button>
-          <button onClick={() => handleSegment('point')} disabled={!picName || points.length === 0} className="btn btn-outline-success">Segment (Points)</button>
+          <button onClick={handleReset} className="btn btn-outline-secondary">
+            Reset
+          </button>
+          <button onClick={handleClearCache} className="btn btn-outline-danger">
+            Clear Cache
+          </button>
+          <button
+            onClick={() => handleSegment('box')}
+            disabled={!picName || boxes.length === 0}
+            className="btn btn-outline-primary"
+          >
+            Segment (Boxes)
+          </button>
+          <button
+            onClick={() => handleSegment('point')}
+            disabled={!picName || points.length === 0}
+            className="btn btn-outline-success"
+          >
+            Segment (Points)
+          </button>
         </div>
+
+        {/* Alert for clearing cache */}
         {cacheCleared && (
           <div className="alert alert-info py-1 px-2 mb-2" role="alert">
             Cache cleared successfully.
           </div>
         )}
+
+        {/* Annotation Canvas */}
         <canvas
           ref={canvasRef}
           onMouseDown={handleMouseDown}
@@ -229,6 +311,8 @@ export default function AnnotationPanel({ side }) {
           className="border border-dark rounded shadow bg-white flex-grow-1"
         />
       </div>
+
+      {/* Segmented Results Panel */}
       <div className="w-25 ps-3 border-start overflow-auto">
         <h5>Segmented Results ({side})</h5>
         {loadingSegments ? (
@@ -241,9 +325,13 @@ export default function AnnotationPanel({ side }) {
             {thumbnails.map((img, idx) => (
               <img
                 key={idx}
-                src={`http://localhost:8000/static/${side}/segmented_box/${img}`}
-                alt={`Segment ${idx}`}
-                className="img-fluid rounded border"
+                src={
+                  side === 'Pool'
+                    ? `http://localhost:8000/static/${side}/new_segmented_irregular/${img}`
+                    : `http://localhost:8000/static/${side}/segmented_irregular/${img}`
+                }
+                alt="segmentation result"
+                style={{ maxWidth: '100%', maxHeight: '200px' }}
               />
             ))}
           </div>
