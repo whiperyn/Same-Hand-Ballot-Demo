@@ -78,7 +78,7 @@ function HeatmapChart() {
   const [heatmapData, setHeatmapData] = useState(null);
   const [lowRange, setLowRange] = useState({ lowMin: 0, lowMax: 0.01 });
   const [logitStats, setLogitStats] = useState({});
-  const [colorMode, setColorMode] = useState("score"); 
+  const [colorMode, setColorMode] = useState("logit"); 
   const [displayMode, setDisplayMode] = useState("score"); 
   const navigate = useNavigate();
 
