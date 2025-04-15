@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
 
 /* ================================
    Utility Functions for Score Mode
    ================================ */
 
-/**
- * Computes the domain for cells in the low score range (score < 0.01)
- * across the entire table.
- */
 function computeLowRange(heatmapData) {
   let lowMin = Infinity;
   let lowMax = -Infinity;
@@ -32,20 +27,12 @@ function computeLowRange(heatmapData) {
   return { lowMin, lowMax };
 }
 
-/**
- * Returns a color for score mode.
- * Uses three ranges:
- *  - High (score ≥ 0.1): interpolate from #00b4d8 (0,180,216) to #0077b6 (0,119,182)
- *  - Medium (0.01 ≤ score < 0.1): interpolate from #ade8f4 (173,232,244) to #48cae4 (72,202,228)
- *  - Low (score < 0.01): interpolate from white (#ffffff) to a stronger light blue (#91b0ed → 145,176,237)
- * Diagonal or missing cells return grey.
- */
 function colorForScore(cellValue, lowMin) {
   if (!cellValue || cellValue.score === null) return 'grey';
   const score = Number(cellValue.score);
 
   if (score >= 0.1) {
-    const factorHigh = (score - 0.1) / 0.9; // normalized: 0 at 0.1, 1 at 1.0
+    const factorHigh = (score - 0.1) / 0.9;
     const red = 0;
     const green = Math.floor(180 - factorHigh * (180 - 119));
     const blue = Math.floor(216 - factorHigh * (216 - 182));
@@ -70,11 +57,6 @@ function colorForScore(cellValue, lowMin) {
    Utility Function for Logit Mode
    ================================ */
 
-/**
- * Returns a color for logit mode.
- * For each query (column), the minimum logit maps to white (255,255,255)
- * and the maximum maps to blue (#0077b6 → RGB: 0,119,182) using linear interpolation.
- */
 function colorForLogit(cellValue, stat) {
   if (!cellValue || cellValue.logit === null) return 'grey';
   const logit = Number(cellValue.logit);
@@ -82,9 +64,9 @@ function colorForLogit(cellValue, stat) {
   if (stat.max !== stat.min) {
     factor = (logit - stat.min) / (stat.max - stat.min);
   }
-  const red = Math.floor(255 - factor * (255 - 0));         // 255 -> 0
-  const green = Math.floor(255 - factor * (255 - 119));      // 255 -> 119
-  const blue = Math.floor(255 - factor * (255 - 182));       // 255 -> 182
+  const red = Math.floor(255 - factor * (255 - 0));
+  const green = Math.floor(255 - factor * (255 - 119));
+  const blue = Math.floor(255 - factor * (255 - 182));
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
@@ -93,31 +75,25 @@ function colorForLogit(cellValue, stat) {
    ================================ */
 
 function HeatmapChart() {
-  // heatmapData is the full object from the backend.
   const [heatmapData, setHeatmapData] = useState(null);
   const [lowRange, setLowRange] = useState({ lowMin: 0, lowMax: 0.01 });
-  const [logitStats, setLogitStats] = useState({}); // Object keyed by query
-  // Two separate toggles:
-  // colorMode controls which metric is used for cell coloring.
-  // displayMode controls which value is shown in the cells.
-  const [colorMode, setColorMode] = useState("score"); // "score" or "logit"
-  const [displayMode, setDisplayMode] = useState("score"); // "score" or "logit"
+  const [logitStats, setLogitStats] = useState({});
+  const [colorMode, setColorMode] = useState("score"); 
+  const [displayMode, setDisplayMode] = useState("score"); 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     fetch('http://localhost:8000/api/heatmap-data')
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setHeatmapData(data);
         setLowRange(computeLowRange(data));
-        // Compute logitStats for each query (column) independently.
         const computedStats = {};
         data.queryKeys.forEach((query) => {
           let minL = Infinity;
           let maxL = -Infinity;
           data.data.forEach((row) => {
-            const cell = row.columns.find(c => c.queryKey === query);
+            const cell = row.columns.find((c) => c.queryKey === query);
             if (cell && cell.score && cell.score.logit != null) {
               const L = Number(cell.score.logit);
               if (L < minL) minL = L;
@@ -134,6 +110,32 @@ function HeatmapChart() {
       });
   }, []);
 
+  const rowsToDisplay = useMemo(() => {
+    if (!heatmapData || !heatmapData.queryKeys) {
+      return [];
+    }
+    if (heatmapData.queryKeys.length === 1) {
+      const singleQuery = heatmapData.queryKeys[0];
+      const filtered = heatmapData.data.filter((row) => row.poolKey !== singleQuery);
+      filtered.sort((a, b) => {
+        const getValue = (row) => {
+          const cell = row.columns.find((c) => c.queryKey === singleQuery);
+          if (cell && cell.score) {
+            if (displayMode === "score" && cell.score.score != null) {
+              return Number(cell.score.score);
+            } else if (displayMode === "logit" && cell.score.logit != null) {
+              return Number(cell.score.logit);
+            }
+          }
+          return -Infinity;
+        };
+        return getValue(b) - getValue(a);
+      });
+      return filtered;
+    }
+    return heatmapData.data;
+  }, [heatmapData, displayMode]);
+
   if (!heatmapData) {
     return (
       <div className="container text-center mt-5">
@@ -144,7 +146,6 @@ function HeatmapChart() {
     );
   }
 
-  // Toggle buttons for color mode and display mode are independent.
   const toggleColorMode = (
     <div className="btn-group mb-3 me-2">
       <span className="me-2">Color Mode:</span>
@@ -187,83 +188,56 @@ function HeatmapChart() {
 
   return (
     <div className="container mt-4">
-        <div className="d-flex justify-content-end mb-2">
+      <div className="d-flex justify-content-end mb-2">
         <button
-            className="btn btn-secondary"
-            onClick={async () => {
+          className="btn btn-secondary"
+          onClick={async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/copy-irregular', {
+              const response = await fetch('http://localhost:8000/api/copy-irregular', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                });
+                headers: { 'Content-Type': 'application/json' },
+              });
 
-                if (response.ok) {
+              if (response.ok) {
                 console.log('✅ Files successfully copied.');
-                navigate('/'); // Redirect to Home
-                } else {
+                navigate('/');
+              } else {
                 console.error('❌ Failed to copy files.');
-                }
+              }
             } catch (error) {
-                console.error('🚨 Error while copying files:', error);
+              console.error('🚨 Error while copying files:', error);
             }
-            }}
+          }}
         >
-            Finish
+          Finish
         </button>
-        </div>
+      </div>
 
       <h2 className="text-center mb-4">Heatmap Chart</h2>
-      
+
       <div className="d-flex flex-wrap justify-content-center">
         {toggleColorMode}
         {toggleDisplayMode}
       </div>
 
-      {/* Legend stays the same 
-      <div className="mb-3 text-center">
-        <h6>Legend:</h6>
-        <span
-          style={{
-            backgroundColor: '#00b4d8',
-            padding: '5px 10px',
-            borderRadius: '4px',
-            marginRight: '5px',
-            color: '#fff'
-          }}
-        >
-          High (≥ 0.1)
-        </span>
-        <span
-          style={{
-            backgroundColor: '#ade8f4',
-            padding: '5px 10px',
-            borderRadius: '4px',
-            marginRight: '5px'
-          }}
-        >
-          Medium (0.01 - 0.1)
-        </span>
-        <span
-          style={{
-            backgroundColor: '#ffffff',
-            padding: '5px 10px',
-            border: '1px solid #ccc',
-            borderRadius: '4px'
-          }}
-        >
-          Low (&lt; 0.01)
-        </span>
-      </div>
-        */}
       <div className="table-responsive">
-        <table className="table table-bordered table-hover table-sm">
+        {/* We force a fixed table layout so that the first column can remain small. */}
+        <table
+          className="table table-bordered table-hover table-sm"
+          style={{ tableLayout: 'fixed', width: '100%' }}
+        >
           <thead className="thead-light">
             <tr>
               <th
                 className="text-center"
-                style={{ backgroundColor: 'orange', color: '#fff' }}
+                style={{
+                  backgroundColor: '#FC8C3B',
+                  color: '#fff',
+                  width: '120px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis'
+                }}
               >
                 Pool &#92; Query
               </th>
@@ -279,17 +253,23 @@ function HeatmapChart() {
             </tr>
           </thead>
           <tbody>
-            {heatmapData.data.map((row) => (
+            {rowsToDisplay.map((row) => (
               <tr key={row.poolKey}>
                 <th
                   className="text-center align-middle"
-                  style={{ backgroundColor: 'orange', color: '#fff' }}
+                  style={{
+                    backgroundColor: '#FC8C3B',
+                    color: '#fff',
+                    width: '120px',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}
                 >
                   {row.poolKey}
                 </th>
                 {row.columns.map((cell) => {
                   let displayedValue = '';
-                  // Determine the cell color based on the selected color mode.
                   let cellColor = '';
                   if (colorMode === "score") {
                     cellColor = colorForScore(cell.score, lowRange.lowMin);
@@ -297,7 +277,6 @@ function HeatmapChart() {
                     const stat = logitStats[cell.queryKey] || { min: 0, max: 1 };
                     cellColor = colorForLogit(cell.score, stat);
                   }
-                  // Determine the displayed value based on the selected display mode.
                   if (displayMode === "score") {
                     displayedValue =
                       cell.score && cell.score.score != null
@@ -340,7 +319,7 @@ function HeatmapChart() {
                         className="align-middle heatmap-cell"
                         style={{
                           backgroundColor: cellColor,
-                          minWidth: '70px',
+                          minWidth: '60px',
                           textAlign: 'center',
                           cursor: 'pointer'
                         }}
@@ -357,9 +336,9 @@ function HeatmapChart() {
       </div>
       <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
         <button className="btn btn-primary" onClick={() => navigate('/ranking')}>
-        See Ranking
+          See Ranking
         </button>
-    </div>
+      </div>
     </div>
   );
 }
