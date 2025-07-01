@@ -1,9 +1,4 @@
-This repository accompanies the paper:
-
-**MarkMatch: Same-Hand Stuffing Detection**  
-*Fei Zhao, Runlin Zhang, Chengcui Zhang, Nitesh Saxena*  
-Accepted at **IEEE International Conference on Multimedia & Expo (ICME) 2025**  
-[arXiv:2505.07032](https://arxiv.org/abs/2505.07032)
+# 🗳️ MarkMatch: Same-Hand Stuffing Detection
 
 MarkMatch provides an end-to-end web application for detecting same-hand ballot stuffing using image similarity analysis. It allows users to:
 
@@ -12,8 +7,17 @@ MarkMatch provides an end-to-end web application for detecting same-hand ballot 
 - Run the MarkMatch model to compute visual similarity scores between segmented regions,
 - Visualize ranked similarity results for manual verification.
 
+- 
+This repository accompanies the paper:
 
-## Acknowledgement
+**MarkMatch: Same-Hand Stuffing Detection**  
+*Fei Zhao, Runlin Zhang, Chengcui Zhang, Nitesh Saxena*  
+Accepted at **IEEE International Conference on Multimedia & Expo (ICME) 2025**  
+[arXiv:2505.07032](https://arxiv.org/abs/2505.07032)
+
+
+
+### Acknowledgement
 This work was supported by NSF CNS-2154589 and 2154507, “Collaborative Research: SaTC: CORE: Medium: Bubble Aid: Assistive AI to Improve the Robustness and Security of Reading HandMarked Ballots,” $1,200,000, 10/01/2022-09/30/2026.
 
 If you find this work helpful, please consider citing:
