@@ -7,7 +7,6 @@ MarkMatch provides an end-to-end web application for detecting same-hand ballot 
 - Run the MarkMatch model to compute visual similarity scores between segmented regions,
 - Visualize ranked similarity results for manual verification.
 
-- 
 This repository accompanies the paper:
 
 **MarkMatch: Same-Hand Stuffing Detection**  
