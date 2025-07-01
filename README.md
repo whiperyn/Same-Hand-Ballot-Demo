@@ -1,3 +1,30 @@
+# Paper
+
+This repository accompanies the paper:
+
+**MarkMatch: Same-Hand Stuffing Detection**  
+*Fei Zhao, Runlin Zhang, Chengcui Zhang, Nitesh Saxena*  
+Accepted at **IEEE International Conference on Multimedia & Expo (ICME) 2025**  
+[arXiv:2505.07032](https://arxiv.org/abs/2505.07032)
+
+
+
+# Acknowledgement
+This work was supported by NSF CNS-2154589 and 2154507, “Collaborative Research: SaTC: CORE: Medium: Bubble Aid: Assistive AI to Improve the Robustness and Security of Reading HandMarked Ballots,” $1,200,000, 10/01/2022-09/30/2026.
+
+If you find this work helpful, please consider citing:
+```bibtex
+@misc{zhao2025markmatchsamehandstuffingdetection,
+  title={MarkMatch: Same-Hand Stuffing Detection},
+  author={Fei Zhao and Runlin Zhang and Chengcui Zhang and Nitesh Saxena},
+  year={2025},
+  eprint={2505.07032},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2505.07032}
+}
+```
+
 # Getting Started
 
 ## Prerequisites
@@ -69,32 +96,39 @@ npm start
 ## How to integrate model.py
 1. The segmented images are saved to ```server/static/segmented_images/```
 2. The output should be in exported to ```result.json```
-    - Currently the result.json format is 
+    - The `result.json` format is structured as follows:
     ```json
     {
-        "similarity1": 0.73,
-        "similarity2": 0.85,
-        "similarity3": 0.98,
-        "overall_similarity": 0.85
+        "alias23_0": [
+            {
+                "Pool": "alias5_0",
+                "Score": 0.5794,
+                "Logit": 14.2857,
+                "Query_path": "./static/Query/segmented_irregular/segmented_irregular_alias23_0.png",
+                "Pool_path": "./static/Pool/segmented_irregular/segmented_irregular_alias5_0.png"
+            },
+            {
+                "Pool": "...",
+                "Score": 0.2162,
+                "Logit": 13.3002,
+                "Query_path": "...",
+                "Pool_path": "..."
+            }
+            // additional candidates...
+        ]
     }
     ```
-    And I extract the fields respectively. If the fields exported are different, let me know and I can update the ui.
 
-    Or 
+    - Each key (e.g., `"alias23_0"`) represents a query image identifier.
+    - Each value is a list of candidate pool images sorted by similarity `Score`.
+    - Each item contains:
+        - `Pool`: candidate image identifier.
+        - `Score`: similarity score between the query and the candidate.
+        - `Logit`: the raw logit value from the model.
+        - `Query_path`: path to the query image.
+        - `Pool_path`: path to the pool image.
 
-    Modify this part in ```client/src/Results.js```
 
-    ```javascript
-    {result && (
-          <div className="p-3 mb-2 bg-light border rounded">
-            <p><strong>Similarity 1:</strong> {result.similarity1}</p>
-            <p><strong>Similarity 2:</strong> {result.similarity2}</p>
-            <p><strong>Similarity 3:</strong> {result.similarity3}</p>
-            <hr />
-            <p><strong>Overall Similarity:</strong> {result.overall_similarity}</p>
-          </div>
-    )}
-    ```
 
 ## General Explanation on the project
 ### File stucture
@@ -201,4 +235,6 @@ Access to fetch at 'http://localhost:5000/api/export-combined' from origin 'http
 ## Some Notes
 ### segment_anything.py
 Warning: only works with transformers==4.47.1, transformers-4.51.0 is too advanced and it will cause NameError: name 'init_empty_weights' is not defined when running segment_anything.py
+
+
 
