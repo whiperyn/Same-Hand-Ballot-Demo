@@ -1,0 +1,6 @@
+server/data/
+**/.DS_Store
+**/result.json
+**/package-lock.json
+**/model_weight.h5
+server/static/segmented_images/examples/
